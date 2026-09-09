@@ -16,7 +16,7 @@ import SocialButton from '../components/SocialButton';
 import { TopBackgroundBlob, LoginBottomArt } from '../components/BackgroundArt';
 import { colors } from '../theme/colors';
 
-export default function LoginScreen({ onNavigateToSignup }) {
+export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPassword }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,9 +39,9 @@ export default function LoginScreen({ onNavigateToSignup }) {
   };
 
   const handleForgotPassword = () => {
-    const msg = 'Password reset instructions have been sent to your email.';
-    if (Platform.OS === 'web') alert(msg);
-    else Alert.alert('Forgot Password', msg);
+    if (onNavigateToForgotPassword) {
+      onNavigateToForgotPassword();
+    }
   };
 
   const handleSocialAuth = (provider) => {
@@ -139,12 +139,14 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: colors.background,
+    justifyContent: 'center',
   },
   scrollContainer: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 10,
+    paddingVertical: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   card: {
     width: '100%',

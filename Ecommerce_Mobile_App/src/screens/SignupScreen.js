@@ -74,22 +74,20 @@ export default function SignupScreen({ onNavigateToLogin }) {
     <SafeAreaView style={styles.safeArea}>
       <TopBackgroundBlob />
 
+      {/* Top Left Back Navigation Button */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={onNavigateToLogin}
+        activeOpacity={0.7}
+      >
+        <ChevronLeft size={24} color={colors.textPrimary} />
+      </TouchableOpacity>
+
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        {/* Top Header Row with Back Button */}
-        <View style={styles.topHeaderNav}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={onNavigateToLogin}
-            activeOpacity={0.7}
-          >
-            <ChevronLeft size={26} color={colors.textPrimary} />
-          </TouchableOpacity>
-        </View>
-
         <BrandHeader />
 
         {/* Signup Form Container */}
@@ -184,34 +182,33 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: colors.background,
+    justifyContent: 'center',
+    position: 'relative',
   },
   scrollContainer: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 10,
+    paddingTop: 96,
+    paddingBottom: 24,
     alignItems: 'center',
-  },
-  topHeaderNav: {
-    width: '100%',
-    maxWidth: 420,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginBottom: -20,
-    zIndex: 10,
+    justifyContent: 'center',
   },
   backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    position: 'absolute',
+    top: 44,
+    left: 20,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     backgroundColor: colors.white,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.12,
+    shadowRadius: 5,
+    elevation: 4,
+    zIndex: 50,
   },
   card: {
     width: '100%',
