@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, SafeAreaView, Animated, Easing, Dimensions } from 'react-native';
+import { View, StyleSheet, Animated, Easing, Dimensions } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
@@ -48,49 +49,51 @@ export default function App() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar style="dark" />
 
-      {/* Screen Frame Container */}
-      <View style={styles.screenWrapper} onLayout={onLayoutContainer}>
-        <Animated.View
-          style={[
-            styles.sliderTrack,
-            {
-              width: containerWidth * 4,
-              transform: [{ translateX }],
-            },
-          ]}
-        >
-          {/* Slide 0: Forgot Password Page */}
-          <View style={[styles.slidePage, { width: containerWidth }]}>
-            <ForgotPasswordScreen onNavigateToLogin={() => navigateTo('login')} />
-          </View>
+        {/* Screen Frame Container */}
+        <View style={styles.screenWrapper} onLayout={onLayoutContainer}>
+          <Animated.View
+            style={[
+              styles.sliderTrack,
+              {
+                width: containerWidth * 4,
+                transform: [{ translateX }],
+              },
+            ]}
+          >
+            {/* Slide 0: Forgot Password Page */}
+            <View style={[styles.slidePage, { width: containerWidth }]}>
+              <ForgotPasswordScreen onNavigateToLogin={() => navigateTo('login')} />
+            </View>
 
-          {/* Slide 1: Login Page */}
-          <View style={[styles.slidePage, { width: containerWidth }]}>
-            <LoginScreen
-              onNavigateToSignup={() => navigateTo('signup')}
-              onNavigateToForgotPassword={() => navigateTo('forgot')}
-              onNavigateToHome={() => navigateTo('home')}
-            />
-          </View>
+            {/* Slide 1: Login Page */}
+            <View style={[styles.slidePage, { width: containerWidth }]}>
+              <LoginScreen
+                onNavigateToSignup={() => navigateTo('signup')}
+                onNavigateToForgotPassword={() => navigateTo('forgot')}
+                onNavigateToHome={() => navigateTo('home')}
+              />
+            </View>
 
-          {/* Slide 2: Create Account Page */}
-          <View style={[styles.slidePage, { width: containerWidth }]}>
-            <SignupScreen
-              onNavigateToLogin={() => navigateTo('login')}
-              onNavigateToHome={() => navigateTo('home')}
-            />
-          </View>
+            {/* Slide 2: Create Account Page */}
+            <View style={[styles.slidePage, { width: containerWidth }]}>
+              <SignupScreen
+                onNavigateToLogin={() => navigateTo('login')}
+                onNavigateToHome={() => navigateTo('home')}
+              />
+            </View>
 
-          {/* Slide 3: E-Commerce Home Page */}
-          <View style={[styles.slidePage, { width: containerWidth }]}>
-            <HomeScreen onNavigateToAuth={() => navigateTo('login')} />
-          </View>
-        </Animated.View>
-      </View>
-    </SafeAreaView>
+            {/* Slide 3: E-Commerce Home Page */}
+            <View style={[styles.slidePage, { width: containerWidth }]}>
+              <HomeScreen onNavigateToAuth={() => navigateTo('login')} />
+            </View>
+          </Animated.View>
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

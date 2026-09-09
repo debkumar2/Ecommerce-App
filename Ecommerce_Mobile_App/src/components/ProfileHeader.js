@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Menu, Heart, ShoppingBag } from 'lucide-react-native';
+import { Bell, Settings } from 'lucide-react-native';
 import Svg, { Path } from 'react-native-svg';
 import { colors } from '../theme/colors';
 
@@ -30,25 +30,14 @@ const CartLogoIcon = () => (
   </Svg>
 );
 
-export default function HomeHeader({
-  wishlistCount = 3,
-  cartCount = 2,
-  onMenuPress,
-  onWishlistPress,
-  onCartPress,
+export default function ProfileHeader({
+  notificationCount = 3,
+  onNotificationPress,
+  onSettingsPress,
 }) {
   return (
     <View style={styles.container}>
-      {/* Left Menu Button */}
-      <TouchableOpacity
-        style={styles.iconButton}
-        onPress={onMenuPress}
-        activeOpacity={0.7}
-      >
-        <Menu size={24} color={colors.textPrimary} />
-      </TouchableOpacity>
-
-      {/* Center Brand Title */}
+      {/* Left Brand Title */}
       <View style={styles.brandContainer}>
         <View style={styles.titleRow}>
           <CartLogoIcon />
@@ -58,32 +47,27 @@ export default function HomeHeader({
         <Text style={styles.subtitle}>Shop More, Live Better</Text>
       </View>
 
-      {/* Right Actions (Wishlist & Cart Badges) */}
+      {/* Right Actions */}
       <View style={styles.rightActions}>
         <TouchableOpacity
           style={styles.iconButton}
-          onPress={onWishlistPress}
+          onPress={onNotificationPress}
           activeOpacity={0.7}
         >
-          <Heart size={24} color={colors.textPrimary} />
-          {wishlistCount > 0 && (
+          <Bell size={24} color={colors.textPrimary} />
+          {notificationCount > 0 && (
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>{wishlistCount}</Text>
+              <Text style={styles.badgeText}>{notificationCount}</Text>
             </View>
           )}
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.iconButton, { marginLeft: 10 }]}
-          onPress={onCartPress}
+          onPress={onSettingsPress}
           activeOpacity={0.7}
         >
-          <ShoppingBag size={24} color={colors.textPrimary} />
-          {cartCount > 0 && (
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>{cartCount}</Text>
-            </View>
-          )}
+          <Settings size={24} color={colors.textPrimary} />
         </TouchableOpacity>
       </View>
     </View>
@@ -98,24 +82,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: colors.background,
-    position: 'relative', // Ensure relative positioning for absolute children
-  },
-  iconButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-    zIndex: 10, // Ensure buttons are clickable above the absolute container
   },
   brandContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 10, // Align with the bottom padding of the container
-    alignItems: 'center',
-    zIndex: 1,
+    alignItems: 'flex-start',
   },
   titleRow: {
     flexDirection: 'row',
@@ -143,7 +112,14 @@ const styles = StyleSheet.create({
   rightActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    zIndex: 10, // Ensure buttons are clickable
+  },
+  iconButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
   },
   badge: {
     position: 'absolute',

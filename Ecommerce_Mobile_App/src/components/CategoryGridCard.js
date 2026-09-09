@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import { ArrowRight } from 'lucide-react-native';
 import { colors } from '../theme/colors';
 
@@ -16,8 +16,9 @@ export default function CategoryGridCard({ item, onPress }) {
         </Text>
         <Text style={styles.itemsCount}>{item.items}</Text>
         
-        <View style={[styles.arrowButton, { backgroundColor: item.iconColor }]}>
-          <ArrowRight size={16} color={colors.white} />
+        <View style={styles.arrowButtonContainer}>
+          <View style={[styles.arrowButtonBg, { backgroundColor: item.iconColor }]} />
+          <ArrowRight size={16} color={item.iconColor} style={styles.arrowIcon} />
         </View>
       </View>
       
@@ -48,28 +49,38 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: '800',
-    color: colors.textPrimary,
+    color: '#1F2937', // Darker black for title
     marginBottom: 4,
   },
   itemsCount: {
     fontSize: 11,
-    color: colors.textSecondary,
+    color: '#6B7280', // Neutral grey for items
     marginBottom: 12,
   },
-  arrowButton: {
+  arrowButtonContainer: {
     width: 28,
     height: 28,
-    borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 'auto',
+    position: 'relative',
+  },
+  arrowButtonBg: {
+    position: 'absolute',
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    opacity: 0.2, // Faded background
+  },
+  arrowIcon: {
+    zIndex: 1,
   },
   image: {
     position: 'absolute',
-    right: -10,
-    bottom: -10,
-    width: 80,
-    height: 80,
+    right: -15,
+    bottom: -15,
+    width: 105,
+    height: 105,
     zIndex: 1,
   },
 });

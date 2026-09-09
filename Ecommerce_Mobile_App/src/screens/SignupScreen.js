@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  SafeAreaView,
   Alert,
   Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { ChevronLeft } from 'lucide-react-native';
 import BrandHeader from '../components/BrandHeader';
@@ -72,7 +72,7 @@ export default function SignupScreen({ onNavigateToLogin, onNavigateToHome }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
       <TopBackgroundBlob />
 
       {/* Top Left Back Navigation Button */}
@@ -84,98 +84,103 @@ export default function SignupScreen({ onNavigateToLogin, onNavigateToHome }) {
         <ChevronLeft size={24} color={colors.textPrimary} />
       </TouchableOpacity>
 
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <BrandHeader />
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <BrandHeader />
 
-        {/* Signup Form Container */}
-        <View style={styles.card}>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Join us and start your shopping journey</Text>
+          {/* Signup Form Container */}
+          <View style={styles.card}>
+            <Text style={styles.title}>Create Account</Text>
+            <Text style={styles.subtitle}>Join us and start your shopping journey</Text>
 
-          {/* Full Name */}
-          <CustomInput
-            label="Full Name"
-            placeholder="Enter your full name"
-            value={fullName}
-            onChangeText={setFullName}
-            iconName="user"
-            autoCapitalize="words"
-          />
+            {/* Full Name */}
+            <CustomInput
+              label="Full Name"
+              placeholder="Enter your full name"
+              value={fullName}
+              onChangeText={setFullName}
+              iconName="user"
+              autoCapitalize="words"
+            />
 
-          {/* Email Address */}
-          <CustomInput
-            label="Email Address"
-            placeholder="Enter your email address"
-            value={email}
-            onChangeText={setEmail}
-            iconName="mail"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
+            {/* Email Address */}
+            <CustomInput
+              label="Email Address"
+              placeholder="Enter your email address"
+              value={email}
+              onChangeText={setEmail}
+              iconName="mail"
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
 
-          {/* Phone Number */}
-          <CustomInput
-            label="Phone Number"
-            placeholder="Enter your phone number"
-            value={phone}
-            onChangeText={setPhone}
-            iconName="phone"
-            keyboardType="phone-pad"
-          />
+            {/* Phone Number */}
+            <CustomInput
+              label="Phone Number"
+              placeholder="Enter your phone number"
+              value={phone}
+              onChangeText={setPhone}
+              iconName="phone"
+              keyboardType="phone-pad"
+            />
 
-          {/* Password */}
-          <CustomInput
-            label="Password"
-            placeholder="Create a password"
-            value={password}
-            onChangeText={setPassword}
-            iconName="lock"
-            isPassword
-          />
+            {/* Password */}
+            <CustomInput
+              label="Password"
+              placeholder="Create a password"
+              value={password}
+              onChangeText={setPassword}
+              iconName="lock"
+              isPassword
+            />
 
-          {/* Confirm Password */}
-          <CustomInput
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            iconName="lock"
-            isPassword
-          />
+            {/* Confirm Password */}
+            <CustomInput
+              label="Confirm Password"
+              placeholder="Confirm your password"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              iconName="lock"
+              isPassword
+            />
 
-          {/* Terms & Conditions Checkbox */}
-          <Checkbox
-            checked={agreeTerms}
-            onChange={setAgreeTerms}
-            onTermsPress={handleTermsPress}
-            onPrivacyPress={handlePrivacyPress}
-          />
+            {/* Terms & Conditions Checkbox */}
+            <Checkbox
+              checked={agreeTerms}
+              onChange={setAgreeTerms}
+              onTermsPress={handleTermsPress}
+              onPrivacyPress={handlePrivacyPress}
+            />
 
-          {/* Primary Create Account Button */}
-          <CustomButton
-            title="Create Account"
-            onPress={handleCreateAccount}
-            loading={loading}
-            style={styles.signupButton}
-          />
+            {/* Primary Create Account Button */}
+            <CustomButton
+              title="Create Account"
+              onPress={handleCreateAccount}
+              loading={loading}
+              style={styles.signupButton}
+            />
 
-          {/* Login Footer Link */}
-          <View style={styles.footerRow}>
-            <Text style={styles.footerText}>Already have an account? </Text>
-            <TouchableOpacity onPress={onNavigateToLogin} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Login</Text>
-            </TouchableOpacity>
+            {/* Login Footer Link */}
+            <View style={styles.footerRow}>
+              <Text style={styles.footerText}>Already have an account? </Text>
+              <TouchableOpacity onPress={onNavigateToLogin} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>Login</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        {/* Bottom Background Illustration */}
-        <SignupBottomArt />
-      </ScrollView>
-    </SafeAreaView>
+          {/* Bottom Background Illustration */}
+          <SignupBottomArt />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 

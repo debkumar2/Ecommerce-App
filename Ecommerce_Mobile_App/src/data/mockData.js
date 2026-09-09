@@ -1,14 +1,14 @@
 export const categoriesData = [
-  { id: '1', name: 'Fashion', items: '1,200+ items', color: '#FFF0F0', iconColor: '#FCA5A5', imageUrl: 'https://images.unsplash.com/photo-1515347619362-6715f5f40356?w=500&q=80' },
-  { id: '2', name: 'Electronics', items: '850+ items', color: '#F0F9FF', iconColor: '#7DD3FC', imageUrl: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=500&q=80' },
-  { id: '3', name: 'Home & Living', items: '670+ items', color: '#ECFDF5', iconColor: '#6EE7B7', imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80' },
-  { id: '4', name: 'Beauty & Personal Care', items: '950+ items', color: '#FDF4FF', iconColor: '#F9A8D4', imageUrl: 'https://images.unsplash.com/photo-1596462502278-27bf85033e5a?w=500&q=80' },
-  { id: '5', name: 'Sports & Fitness', items: '420+ items', color: '#FFF7ED', iconColor: '#FDBA74', imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&q=80' },
-  { id: '6', name: 'Groceries', items: '1,100+ items', color: '#F0FDF4', iconColor: '#86EFAC', imageUrl: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80' },
-  { id: '7', name: 'Toys & Games', items: '540+ items', color: '#F5F3FF', iconColor: '#C4B5FD', imageUrl: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=500&q=80' },
-  { id: '8', name: 'Health & Wellness', items: '620+ items', color: '#FEFCE8', iconColor: '#FDE047', imageUrl: 'https://images.unsplash.com/photo-1584308666744-24d5e4a5d898?w=500&q=80' },
-  { id: '9', name: 'Mobiles & Accessories', items: '780+ items', color: '#EFF6FF', iconColor: '#93C5FD', imageUrl: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80' },
-  { id: '10', name: 'Books & Stationery', items: '360+ items', color: '#FFF1F2', iconColor: '#FDA4AF', imageUrl: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500&q=80' },
+  { id: '1', name: 'Fashion', items: '1,200+ items', color: '#FFF0F0', iconColor: '#EF4444', imageUrl: 'https://img.icons8.com/color/256/dress-front-view.png' },
+  { id: '2', name: 'Electronics', items: '850+ items', color: '#F0F9FF', iconColor: '#3B82F6', imageUrl: 'https://img.icons8.com/color/256/laptop--v1.png' },
+  { id: '3', name: 'Home & Living', items: '670+ items', color: '#ECFDF5', iconColor: '#10B981', imageUrl: 'https://img.icons8.com/color/256/armchair.png' },
+  { id: '4', name: 'Beauty & Personal Care', items: '950+ items', color: '#FDF4FF', iconColor: '#EC4899', imageUrl: 'https://img.icons8.com/color/256/perfume-bottle.png' },
+  { id: '5', name: 'Sports & Fitness', items: '420+ items', color: '#FFF7ED', iconColor: '#F97316', imageUrl: 'https://img.icons8.com/color/256/dumbbell.png' },
+  { id: '6', name: 'Groceries', items: '1,100+ items', color: '#F0FDF4', iconColor: '#22C55E', imageUrl: 'https://img.icons8.com/color/256/shopping-basket-2.png' },
+  { id: '7', name: 'Toys & Games', items: '540+ items', color: '#F5F3FF', iconColor: '#8B5CF6', imageUrl: 'https://img.icons8.com/color/256/teddy-bear.png' },
+  { id: '8', name: 'Health & Wellness', items: '620+ items', color: '#FEFCE8', iconColor: '#EAB308', imageUrl: 'https://img.icons8.com/color/256/pills.png' },
+  { id: '9', name: 'Mobiles & Accessories', items: '780+ items', color: '#EFF6FF', iconColor: '#3B82F6', imageUrl: 'https://img.icons8.com/color/256/iphone.png' },
+  { id: '10', name: 'Books & Stationery', items: '360+ items', color: '#FFF1F2', iconColor: '#F43F5E', imageUrl: 'https://img.icons8.com/color/256/books.png' },
 ];
 
 export const todaysDealsData = [
@@ -48,6 +48,69 @@ export const todaysDealsData = [
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
   },
+];
+
+export const ordersData = [
+  {
+    id: '1',
+    orderNumber: 'SK12345678',
+    placedDate: '12 Mar 2024',
+    status: 'Delivered',
+    statusDateText: 'Delivered on\n15 Mar 2024',
+    actionText: 'Buy Again',
+    product: {
+      name: "Men's Running Shoes",
+      variants: 'Size: 9 | Color: White',
+      price: '₹2,499',
+      qty: 1,
+      imageUrl: 'https://img.icons8.com/color/256/sneakers.png'
+    }
+  },
+  {
+    id: '2',
+    orderNumber: 'SK12345677',
+    placedDate: '08 Mar 2024',
+    status: 'Shipped',
+    statusDateText: 'Expected Delivery\n12 Mar 2024',
+    actionText: 'Track Order',
+    product: {
+      name: 'Smart Watch',
+      variants: 'Color: Black',
+      price: '₹2,999',
+      qty: 1,
+      imageUrl: 'https://img.icons8.com/color/256/apple-watch-apps.png'
+    }
+  },
+  {
+    id: '3',
+    orderNumber: 'SK12345676',
+    placedDate: '01 Mar 2024',
+    status: 'Processing',
+    statusDateText: "Preparing for shipment\nWe'll notify you soon",
+    actionText: 'View Details',
+    product: {
+      name: "Women's Handbag",
+      variants: 'Color: Pink',
+      price: '₹1,299',
+      qty: 1,
+      imageUrl: 'https://img.icons8.com/color/256/womans-bag.png'
+    }
+  },
+  {
+    id: '4',
+    orderNumber: 'SK12345675',
+    placedDate: '20 Feb 2024',
+    status: 'Cancelled',
+    statusDateText: 'Cancelled on\n21 Feb 2024',
+    actionText: 'View Details',
+    product: {
+      name: 'Wireless Headphones',
+      variants: 'Color: Black',
+      price: '₹1,999',
+      qty: 1,
+      imageUrl: 'https://img.icons8.com/color/256/headphones.png'
+    }
+  }
 ];
 
 export const featuredProductsData = [

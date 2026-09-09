@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  SafeAreaView,
   Alert,
   Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { ChevronLeft, KeyRound, CheckCircle2 } from 'lucide-react-native';
 import BrandHeader from '../components/BrandHeader';
@@ -47,7 +47,7 @@ export default function ForgotPasswordScreen({ onNavigateToLogin }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
       <TopBackgroundBlob />
 
       {/* Top Left Back Navigation Button */}
@@ -59,90 +59,95 @@ export default function ForgotPasswordScreen({ onNavigateToLogin }) {
         <ChevronLeft size={24} color={colors.textPrimary} />
       </TouchableOpacity>
 
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <BrandHeader />
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <BrandHeader />
 
-        {/* Form Container Card */}
-        <View style={styles.card}>
-          <View style={styles.iconCircle}>
-            {submitted ? (
-              <CheckCircle2 size={32} color={colors.success} />
+          {/* Form Container Card */}
+          <View style={styles.card}>
+            <View style={styles.iconCircle}>
+              {submitted ? (
+                <CheckCircle2 size={32} color={colors.success} />
+              ) : (
+                <KeyRound size={32} color={colors.primary} />
+              )}
+            </View>
+
+            <Text style={styles.title}>
+              {submitted ? 'Check Your Email' : 'Forgot Password?'}
+            </Text>
+            <Text style={styles.subtitle}>
+              {submitted
+                ? `We have sent password reset instructions to ${email}`
+                : "Enter your registered email address and we'll send you a link to reset your password."}
+            </Text>
+
+            {!submitted ? (
+              <>
+                {/* Registered Email Input */}
+                <CustomInput
+                  label="Email Address"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChangeText={setEmail}
+                  iconName="mail"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+
+                {/* Action Button */}
+                <CustomButton
+                  title="Send Reset Link"
+                  onPress={handleSendResetLink}
+                  loading={loading}
+                  style={styles.actionButton}
+                />
+              </>
             ) : (
-              <KeyRound size={32} color={colors.primary} />
+              <>
+                <CustomButton
+                  title="Back to Login"
+                  onPress={onNavigateToLogin}
+                  style={styles.actionButton}
+                />
+
+                <TouchableOpacity
+                  style={styles.resendContainer}
+                  onPress={handleResend}
+                  activeOpacity={0.7}
+                  disabled={loading}
+                >
+                  <Text style={styles.resendText}>
+                    Didn't receive the email?{' '}
+                    <Text style={styles.resendLink}>Click to resend</Text>
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+
+            {/* Footer Link back to Login */}
+            {!submitted && (
+              <View style={styles.footerRow}>
+                <Text style={styles.footerText}>Remember your password? </Text>
+                <TouchableOpacity onPress={onNavigateToLogin} activeOpacity={0.7}>
+                  <Text style={styles.footerLink}>Login</Text>
+                </TouchableOpacity>
+              </View>
             )}
           </View>
 
-          <Text style={styles.title}>
-            {submitted ? 'Check Your Email' : 'Forgot Password?'}
-          </Text>
-          <Text style={styles.subtitle}>
-            {submitted
-              ? `We have sent password reset instructions to ${email}`
-              : "Enter your registered email address and we'll send you a link to reset your password."}
-          </Text>
-
-          {!submitted ? (
-            <>
-              {/* Registered Email Input */}
-              <CustomInput
-                label="Email Address"
-                placeholder="Enter your email address"
-                value={email}
-                onChangeText={setEmail}
-                iconName="mail"
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-
-              {/* Action Button */}
-              <CustomButton
-                title="Send Reset Link"
-                onPress={handleSendResetLink}
-                loading={loading}
-                style={styles.actionButton}
-              />
-            </>
-          ) : (
-            <>
-              <CustomButton
-                title="Back to Login"
-                onPress={onNavigateToLogin}
-                style={styles.actionButton}
-              />
-
-              <TouchableOpacity
-                style={styles.resendContainer}
-                onPress={handleResend}
-                activeOpacity={0.7}
-                disabled={loading}
-              >
-                <Text style={styles.resendText}>
-                  Didn't receive the email?{' '}
-                  <Text style={styles.resendLink}>Click to resend</Text>
-                </Text>
-              </TouchableOpacity>
-            </>
-          )}
-
-          {/* Footer Link back to Login */}
-          {!submitted && (
-            <View style={styles.footerRow}>
-              <Text style={styles.footerText}>Remember your password? </Text>
-              <TouchableOpacity onPress={onNavigateToLogin} activeOpacity={0.7}>
-                <Text style={styles.footerLink}>Login</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
-
-        {/* Bottom Background Art */}
-        <LoginBottomArt />
-      </ScrollView>
-    </SafeAreaView>
+          {/* Bottom Background Art */}
+          <LoginBottomArt />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 

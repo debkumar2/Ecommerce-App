@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  SafeAreaView,
   Alert,
   Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import BrandHeader from '../components/BrandHeader';
 import CustomInput from '../components/CustomInput';
@@ -55,87 +55,92 @@ export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPass
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
       <TopBackgroundBlob />
 
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <BrandHeader />
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <BrandHeader />
 
-        {/* Form Container Card */}
-        <View style={styles.card}>
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>Sign in to continue shopping</Text>
+          {/* Form Container Card */}
+          <View style={styles.card}>
+            <Text style={styles.title}>Welcome Back</Text>
+            <Text style={styles.subtitle}>Sign in to continue shopping</Text>
 
-          {/* Email Input */}
-          <CustomInput
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={setEmail}
-            iconName="mail"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
+            {/* Email Input */}
+            <CustomInput
+              placeholder="Enter your email"
+              value={email}
+              onChangeText={setEmail}
+              iconName="mail"
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
 
-          {/* Password Input */}
-          <CustomInput
-            placeholder="Enter your password"
-            value={password}
-            onChangeText={setPassword}
-            iconName="lock"
-            isPassword
-          />
+            {/* Password Input */}
+            <CustomInput
+              placeholder="Enter your password"
+              value={password}
+              onChangeText={setPassword}
+              iconName="lock"
+              isPassword
+            />
 
-          {/* Forgot Password Link */}
-          <TouchableOpacity
-            style={styles.forgotPasswordContainer}
-            onPress={handleForgotPassword}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-          </TouchableOpacity>
-
-          {/* Primary Login Button */}
-          <CustomButton
-            title="Login"
-            onPress={handleLogin}
-            loading={loading}
-            style={styles.loginButton}
-          />
-
-          {/* Divider */}
-          <View style={styles.dividerRow}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>OR</Text>
-            <View style={styles.dividerLine} />
-          </View>
-
-          {/* Social Buttons */}
-          <SocialButton
-            type="google"
-            onPress={() => handleSocialAuth('Google')}
-          />
-          <SocialButton
-            type="apple"
-            onPress={() => handleSocialAuth('Apple')}
-          />
-
-          {/* Create Account Link Footer */}
-          <View style={styles.footerRow}>
-            <Text style={styles.footerText}>Don't have an account? </Text>
-            <TouchableOpacity onPress={onNavigateToSignup} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Create Account</Text>
+            {/* Forgot Password Link */}
+            <TouchableOpacity
+              style={styles.forgotPasswordContainer}
+              onPress={handleForgotPassword}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
             </TouchableOpacity>
-          </View>
-        </View>
 
-        {/* Bottom Background Art & Tagline */}
-        <LoginBottomArt />
-      </ScrollView>
-    </SafeAreaView>
+            {/* Primary Login Button */}
+            <CustomButton
+              title="Login"
+              onPress={handleLogin}
+              loading={loading}
+              style={styles.loginButton}
+            />
+
+            {/* Divider */}
+            <View style={styles.dividerRow}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>OR</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            {/* Social Buttons */}
+            <SocialButton
+              type="google"
+              onPress={() => handleSocialAuth('Google')}
+            />
+            <SocialButton
+              type="apple"
+              onPress={() => handleSocialAuth('Apple')}
+            />
+
+            {/* Create Account Link Footer */}
+            <View style={styles.footerRow}>
+              <Text style={styles.footerText}>Don't have an account? </Text>
+              <TouchableOpacity onPress={onNavigateToSignup} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>Create Account</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Bottom Background Art & Tagline */}
+          <LoginBottomArt />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 
