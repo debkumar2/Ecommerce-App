@@ -16,9 +16,9 @@ import SocialButton from '../components/SocialButton';
 import { TopBackgroundBlob, LoginBottomArt } from '../components/BackgroundArt';
 import { colors } from '../theme/colors';
 
-export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPassword }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPassword, onNavigateToHome }) {
+  const [email, setEmail] = useState('demo@shopease.com');
+  const [password, setPassword] = useState('password123');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
@@ -32,10 +32,10 @@ export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPass
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      const msg = `Welcome back, ${email}! Login successful.`;
-      if (Platform.OS === 'web') alert(msg);
-      else Alert.alert('Success', msg);
-    }, 1000);
+      if (onNavigateToHome) {
+        onNavigateToHome();
+      }
+    }, 800);
   };
 
   const handleForgotPassword = () => {
@@ -45,9 +45,13 @@ export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPass
   };
 
   const handleSocialAuth = (provider) => {
-    const msg = `${provider} sign in initiated.`;
-    if (Platform.OS === 'web') alert(msg);
-    else Alert.alert('Social Login', msg);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      if (onNavigateToHome) {
+        onNavigateToHome();
+      }
+    }, 600);
   };
 
   return (

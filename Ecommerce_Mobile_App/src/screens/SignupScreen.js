@@ -17,7 +17,7 @@ import Checkbox from '../components/Checkbox';
 import { TopBackgroundBlob, SignupBottomArt } from '../components/BackgroundArt';
 import { colors } from '../theme/colors';
 
-export default function SignupScreen({ onNavigateToLogin }) {
+export default function SignupScreen({ onNavigateToLogin, onNavigateToHome }) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -51,10 +51,11 @@ export default function SignupScreen({ onNavigateToLogin }) {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      const msg = `Account successfully created for ${fullName}!`;
-      if (Platform.OS === 'web') alert(msg);
-      else Alert.alert('Success', msg);
-      onNavigateToLogin();
+      if (onNavigateToHome) {
+        onNavigateToHome();
+      } else {
+        onNavigateToLogin();
+      }
     }, 1200);
   };
 

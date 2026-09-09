@@ -4,15 +4,16 @@ import { StatusBar } from 'expo-status-bar';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import { colors } from './src/theme/colors';
 
 const DEFAULT_WIDTH = Math.min(Dimensions.get('window').width, 500);
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('login'); // 'forgot' | 'login' | 'signup'
+  const [currentScreen, setCurrentScreen] = useState('login'); // 'forgot' | 'login' | 'signup' | 'home'
   const [containerWidth, setContainerWidth] = useState(DEFAULT_WIDTH);
   
-  // Track position: 0 = forgot, 1 = login (default), 2 = signup
+  // Track position: 0 = forgot, 1 = login (default), 2 = signup, 3 = home
   const slideAnim = useRef(new Animated.Value(1)).current;
 
   const navigateTo = (targetScreen) => {
@@ -20,11 +21,13 @@ export default function App() {
 
     let toValue = 1;
     if (targetScreen === 'forgot') toValue = 0;
+    if (targetScreen === 'login') toValue = 1;
     if (targetScreen === 'signup') toValue = 2;
+    if (targetScreen === 'home') toValue = 3;
 
     Animated.timing(slideAnim, {
       toValue,
-      duration: 350,
+      duration: 380,
       easing: Easing.out(Easing.cubic),
       useNativeDriver: true,
     }).start(() => {
@@ -40,8 +43,8 @@ export default function App() {
   };
 
   const translateX = slideAnim.interpolate({
-    inputRange: [0, 1, 2],
-    outputRange: [0, -containerWidth, -containerWidth * 2],
+    inputRange: [0, 1, 2, 3],
+    outputRange: [0, -containerWidth, -containerWidth * 2, -containerWidth * 3],
   });
 
   return (
@@ -54,7 +57,7 @@ export default function App() {
           style={[
             styles.sliderTrack,
             {
-              width: containerWidth * 3,
+              width: containerWidth * 4,
               transform: [{ translateX }],
             },
           ]}
@@ -69,12 +72,21 @@ export default function App() {
             <LoginScreen
               onNavigateToSignup={() => navigateTo('signup')}
               onNavigateToForgotPassword={() => navigateTo('forgot')}
+              onNavigateToHome={() => navigateTo('home')}
             />
           </View>
 
           {/* Slide 2: Create Account Page */}
           <View style={[styles.slidePage, { width: containerWidth }]}>
-            <SignupScreen onNavigateToLogin={() => navigateTo('login')} />
+            <SignupScreen
+              onNavigateToLogin={() => navigateTo('login')}
+              onNavigateToHome={() => navigateTo('home')}
+            />
+          </View>
+
+          {/* Slide 3: E-Commerce Home Page */}
+          <View style={[styles.slidePage, { width: containerWidth }]}>
+            <HomeScreen onNavigateToAuth={() => navigateTo('login')} />
           </View>
         </Animated.View>
       </View>
