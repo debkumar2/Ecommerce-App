@@ -5,7 +5,7 @@ import Svg, { Path } from 'react-native-svg';
 import { colors } from '../theme/colors';
 
 const CartLogoIcon = () => (
-  <Svg width={28} height={28} viewBox="0 0 60 60" fill="none">
+  <Svg width={24} height={24} viewBox="0 0 60 60" fill="none">
     <Path
       d="M12 14H18L22.5 38H45.5L50 20H20"
       stroke={colors.primary}
@@ -45,11 +45,11 @@ export default function HomeHeader({
         onPress={onMenuPress}
         activeOpacity={0.7}
       >
-        <Menu size={24} color={colors.textPrimary} />
+        <Menu size={22} color={colors.textPrimary} />
       </TouchableOpacity>
 
       {/* Center Brand Title */}
-      <View style={styles.brandContainer}>
+      <View style={styles.brandContainer} pointerEvents="box-none">
         <View style={styles.titleRow}>
           <CartLogoIcon />
           <Text style={styles.titleShop}>Shop</Text>
@@ -65,7 +65,7 @@ export default function HomeHeader({
           onPress={onWishlistPress}
           activeOpacity={0.7}
         >
-          <Heart size={24} color={colors.textPrimary} />
+          <Heart size={22} color={colors.textPrimary} />
           {wishlistCount > 0 && (
             <View style={styles.badge}>
               <Text style={styles.badgeText}>{wishlistCount}</Text>
@@ -74,11 +74,11 @@ export default function HomeHeader({
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.iconButton, { marginLeft: 10 }]}
+          style={[styles.iconButton, { marginLeft: 4 }]}
           onPress={onCartPress}
           activeOpacity={0.7}
         >
-          <ShoppingBag size={24} color={colors.textPrimary} />
+          <ShoppingBag size={22} color={colors.textPrimary} />
           {cartCount > 0 && (
             <View style={styles.badge}>
               <Text style={styles.badgeText}>{cartCount}</Text>
@@ -92,28 +92,30 @@ export default function HomeHeader({
 
 const styles = StyleSheet.create({
   container: {
+    height: 56,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: 16,
     backgroundColor: colors.background,
-    position: 'relative', // Ensure relative positioning for absolute children
+    position: 'relative',
   },
   iconButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    zIndex: 10, // Ensure buttons are clickable above the absolute container
+    zIndex: 10,
   },
   brandContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 10, // Align with the bottom padding of the container
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
   },
@@ -122,37 +124,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleShop: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '800',
     color: colors.textPrimary,
     marginLeft: 4,
-    letterSpacing: -0.5,
+    letterSpacing: -0.4,
   },
   titleEase: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '800',
     color: colors.primary,
-    letterSpacing: -0.5,
+    letterSpacing: -0.4,
   },
   subtitle: {
-    fontSize: 10,
+    fontSize: 9.5,
     color: colors.textSecondary,
     fontWeight: '500',
-    marginTop: -2,
+    marginTop: -1,
   },
   rightActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    zIndex: 10, // Ensure buttons are clickable
+    zIndex: 10,
   },
   badge: {
     position: 'absolute',
-    top: 2,
-    right: 2,
+    top: 1,
+    right: 1,
     backgroundColor: colors.primary,
-    minWidth: 17,
-    height: 17,
-    borderRadius: 9,
+    minWidth: 16,
+    height: 16,
+    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 3,
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     color: colors.white,
-    fontSize: 10,
+    fontSize: 9.5,
     fontWeight: '800',
   },
 });

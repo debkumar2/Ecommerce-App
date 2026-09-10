@@ -24,11 +24,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 48,
+    height: 46,
     backgroundColor: '#F3F4F6',
     borderRadius: 14,
-    marginHorizontal: 20,
-    marginVertical: 10,
+    marginHorizontal: 16,
+    marginTop: 10,
+    marginBottom: 12,
     paddingHorizontal: 14,
   },
   searchIcon: {

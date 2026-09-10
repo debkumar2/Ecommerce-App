@@ -80,7 +80,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginTop: 0,
     backgroundColor: colors.background,
   },
   brandContainer: {

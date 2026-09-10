@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { ChevronRight } from 'lucide-react-native';
 import HomeHeader from '../components/HomeHeader';
-import ProfileHeader from '../components/ProfileHeader';
 import SearchBar from '../components/SearchBar';
 import HeroBanner from '../components/HeroBanner';
 import CategoryList from '../components/CategoryList';
@@ -22,6 +21,7 @@ import HomePromoBanner from '../components/HomePromoBanner';
 import BottomNavBar from '../components/BottomNavBar';
 import CategoriesContent from './CategoriesContent';
 import OrdersContent from './OrdersContent';
+import WishlistContent from './WishlistContent';
 import ProfileContent from './ProfileContent';
 import { todaysDealsData, featuredProductsData } from '../data/mockData';
 import { colors } from '../theme/colors';
@@ -92,22 +92,14 @@ export default function HomeScreen({ onNavigateToAuth }) {
 
   return (
     <View style={styles.safeArea}>
-      {/* Dynamic Top Header */}
-      {activeBottomTab === 'profile' ? (
-        <ProfileHeader
-          notificationCount={3}
-          onNotificationPress={() => Alert.alert('Notifications', 'You have 3 unread notifications.')}
-          onSettingsPress={() => Alert.alert('Settings', 'Opening profile settings...')}
-        />
-      ) : (
-        <HomeHeader
-          wishlistCount={wishlistCount}
-          cartCount={cartCount}
-          onMenuPress={() => Alert.alert('Menu', 'Opening side navigation drawer...')}
-          onWishlistPress={() => handleBottomTabPress('wishlist')}
-          onCartPress={() => Alert.alert('Cart', `Your cart has ${cartCount} items.`)}
-        />
-      )}
+      {/* Standardized Top Header for all screens */}
+      <HomeHeader
+        wishlistCount={wishlistCount}
+        cartCount={cartCount}
+        onMenuPress={() => Alert.alert('Menu', 'Opening side navigation drawer...')}
+        onWishlistPress={() => handleBottomTabPress('wishlist')}
+        onCartPress={() => Alert.alert('Cart', `Your cart has ${cartCount} items.`)}
+      />
 
       {/* Main Content with Slide Animation */}
       <View style={styles.mainContentWrapper} onLayout={onLayoutContent}>
@@ -219,9 +211,12 @@ export default function HomeScreen({ onNavigateToAuth }) {
             <OrdersContent />
           </View>
 
-          {/* 3: Wishlist Page (Placeholder) */}
-          <View style={[styles.slidePage, { width: contentWidth }, styles.placeholderPage]}>
-            <Text style={styles.placeholderText}>Wishlist Coming Soon</Text>
+          {/* 3: Wishlist Page */}
+          <View style={[styles.slidePage, { width: contentWidth }]}>
+            <WishlistContent
+              onAddToCart={handleAddToCart}
+              onExploreProducts={() => handleBottomTabPress('categories')}
+            />
           </View>
 
           {/* 4: Profile Page */}

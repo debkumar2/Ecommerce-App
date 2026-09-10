@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    paddingTop: 10,
     marginBottom: 20,
   },
   titleRow: {

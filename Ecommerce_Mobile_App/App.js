@@ -50,8 +50,8 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <StatusBar style="dark" />
+      <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
+        <StatusBar style="dark" backgroundColor={colors.background} translucent={false} />
 
         {/* Screen Frame Container */}
         <View style={styles.screenWrapper} onLayout={onLayoutContainer}>
@@ -100,22 +100,14 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: colors.background,
   },
   screenWrapper: {
     flex: 1,
     width: '100%',
     maxWidth: 500,
     alignSelf: 'center',
-    justifyContent: 'center',
     backgroundColor: colors.background,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
-    shadowRadius: 12,
-    elevation: 3,
     overflow: 'hidden',
   },
   sliderTrack: {

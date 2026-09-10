@@ -172,9 +172,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
   },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 40,
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 30,
   },
   profileCard: {
     backgroundColor: '#FFF1E6', // Light peach background matching reference
