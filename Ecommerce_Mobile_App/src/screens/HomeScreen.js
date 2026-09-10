@@ -23,7 +23,8 @@ import CategoriesContent from './CategoriesContent';
 import OrdersContent from './OrdersContent';
 import WishlistContent from './WishlistContent';
 import ProfileContent from './ProfileContent';
-import { todaysDealsData, featuredProductsData } from '../data/mockData';
+import CartScreen from './CartScreen';
+import { todaysDealsData, featuredProductsData, initialCartData } from '../data/mockData';
 import { colors } from '../theme/colors';
 
 const TABS = ['home', 'categories', 'orders', 'wishlist', 'profile'];
@@ -31,15 +32,38 @@ const TABS = ['home', 'categories', 'orders', 'wishlist', 'profile'];
 export default function HomeScreen({ onNavigateToAuth }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Fashion');
-  const [cartCount, setCartCount] = useState(2);
+  const [cartItems, setCartItems] = useState(initialCartData);
   const [wishlistCount, setWishlistCount] = useState(3);
   const [activeBottomTab, setActiveBottomTab] = useState('profile');
+  const [isCartModalVisible, setIsCartModalVisible] = useState(false);
   const [contentWidth, setContentWidth] = useState(Dimensions.get('window').width);
 
+  const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const slideAnim = useRef(new Animated.Value(0)).current;
 
   const handleAddToCart = (item) => {
-    setCartCount(cartCount + 1);
+    setCartItems((prev) => {
+      const existing = prev.find((i) => i.id === item.id || i.name === item.name);
+      if (existing) {
+        return prev.map((i) =>
+          (i.id === item.id || i.name === item.name)
+            ? { ...i, quantity: i.quantity + 1 }
+            : i
+        );
+      }
+      return [
+        ...prev,
+        {
+          id: item.id || `cart-${Date.now()}`,
+          name: item.name,
+          price: item.price,
+          originalPrice: item.originalPrice,
+          quantity: 1,
+          imageUrl: item.imageUrl,
+          variant: item.variant || 'Standard',
+        },
+      ];
+    });
     const msg = `Added "${item.name}" to your cart!`;
     if (Platform.OS === 'web') alert(msg);
     else Alert.alert('Cart Updated', msg);
@@ -95,10 +119,10 @@ export default function HomeScreen({ onNavigateToAuth }) {
       {/* Standardized Top Header for all screens */}
       <HomeHeader
         wishlistCount={wishlistCount}
-        cartCount={cartCount}
+        cartCount={totalCartCount}
         onMenuPress={() => Alert.alert('Menu', 'Opening side navigation drawer...')}
         onWishlistPress={() => handleBottomTabPress('wishlist')}
-        onCartPress={() => Alert.alert('Cart', `Your cart has ${cartCount} items.`)}
+        onCartPress={() => setIsCartModalVisible(true)}
       />
 
       {/* Main Content with Slide Animation */}
@@ -125,9 +149,14 @@ export default function HomeScreen({ onNavigateToAuth }) {
                 onSubmit={() => Alert.alert('Search', `Searching for: ${searchQuery}`)}
               />
 
-              {/* Fashion Hero Banner */}
+              {/* Multi-Post Auto Hero Banner Carousel */}
               <HeroBanner
-                onShopNowPress={() => Alert.alert('New Collection', 'Exploring New Fashion Collection!')}
+                onShopNowPress={(slide) =>
+                  Alert.alert(
+                    slide ? slide.badge : 'Collection',
+                    `Exploring ${slide ? slide.title : 'New Collection'}!`
+                  )
+                }
               />
 
               {/* Categories Bar */}
@@ -230,6 +259,14 @@ export default function HomeScreen({ onNavigateToAuth }) {
       <BottomNavBar
         activeTab={activeBottomTab}
         onTabPress={handleBottomTabPress}
+      />
+
+      {/* Interactive Cart Screen Modal */}
+      <CartScreen
+        visible={isCartModalVisible}
+        onClose={() => setIsCartModalVisible(false)}
+        cartItems={cartItems}
+        setCartItems={setCartItems}
       />
     </View>
   );

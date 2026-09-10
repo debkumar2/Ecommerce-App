@@ -210,3 +210,24 @@ export const wishlistData = [
     imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
   },
 ];
+
+export const initialCartData = [
+  {
+    id: 'cart-1',
+    name: 'Wireless Headphones',
+    variant: 'Color: Matte Black',
+    price: 1999,
+    originalPrice: 3999,
+    quantity: 1,
+    imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
+  },
+  {
+    id: 'cart-2',
+    name: "Men's Pro Running Shoes",
+    variant: 'Size: 9 | Color: Red',
+    price: 2499,
+    originalPrice: 4199,
+    quantity: 1,
+    imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
+  },
+];
