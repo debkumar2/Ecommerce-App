@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Heart, Star, ShoppingBag, Headphones, Footprints, Watch, Smartphone, Sparkles } from 'lucide-react-native';
 import { colors } from '../theme/colors';
 
-export default function ProductCard({ item, onAddToCart, onToggleFavorite }) {
+export default function ProductCard({ item, onAddToCart, onToggleFavorite, containerStyle }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleFavoritePress = () => {
@@ -43,7 +43,7 @@ export default function ProductCard({ item, onAddToCart, onToggleFavorite }) {
   };
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, containerStyle]}>
       {/* Image Container with Top Row overlaid */}
       <View style={styles.imageContainer}>
         {renderProductIllustration()}

@@ -18,13 +18,21 @@ import HeroBanner from '../components/HeroBanner';
 import CategoryList from '../components/CategoryList';
 import ProductCard from '../components/ProductCard';
 import HomePromoBanner from '../components/HomePromoBanner';
+import FlashSaleSection from '../components/FlashSaleSection';
+import TopBrandsSection from '../components/TopBrandsSection';
+import ShopByVideoSection from '../components/ShopByVideoSection';
+import DealOfTheDaySection from '../components/DealOfTheDaySection';
+import ShopTheLookSection from '../components/ShopTheLookSection';
+import CollectionsGrid from '../components/CollectionsGrid';
 import BottomNavBar from '../components/BottomNavBar';
 import CategoriesContent from './CategoriesContent';
 import OrdersContent from './OrdersContent';
 import WishlistContent from './WishlistContent';
 import ProfileContent from './ProfileContent';
 import CartScreen from './CartScreen';
-import { todaysDealsData, featuredProductsData, initialCartData } from '../data/mockData';
+import TodaysDealsScreen from './TodaysDealsScreen';
+import StoryViewerScreen from './StoryViewerScreen';
+import { todaysDealsData, featuredProductsData, initialCartData, flashSaleData, topBrandsData, collectionsData, videoShortsData, dealOfTheDayData, shopTheLookData } from '../data/mockData';
 import { colors } from '../theme/colors';
 
 const TABS = ['home', 'categories', 'orders', 'wishlist', 'profile'];
@@ -36,6 +44,9 @@ export default function HomeScreen({ onNavigateToAuth }) {
   const [wishlistCount, setWishlistCount] = useState(3);
   const [activeBottomTab, setActiveBottomTab] = useState('profile');
   const [isCartModalVisible, setIsCartModalVisible] = useState(false);
+  const [isTodaysDealsVisible, setIsTodaysDealsVisible] = useState(false);
+  const [isStoryVisible, setIsStoryVisible] = useState(false);
+  const [activeStoryCategory, setActiveStoryCategory] = useState(null);
   const [contentWidth, setContentWidth] = useState(Dimensions.get('window').width);
 
   const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -73,10 +84,16 @@ export default function HomeScreen({ onNavigateToAuth }) {
     setWishlistCount(isFav ? wishlistCount + 1 : Math.max(0, wishlistCount - 1));
   };
 
+  const handleCategoryPress = (categoryItem) => {
+    setSelectedCategory(categoryItem.name);
+    if (categoryItem.stories && categoryItem.stories.length > 0) {
+      setActiveStoryCategory(categoryItem);
+      setIsStoryVisible(true);
+    }
+  };
+
   const handleSeeAllDeals = () => {
-    const msg = 'Navigating to Today\'s Deals collection...';
-    if (Platform.OS === 'web') alert(msg);
-    else Alert.alert('Today\'s Deals', msg);
+    setIsTodaysDealsVisible(true);
   };
 
   const handleSeeAllFeatured = () => {
@@ -162,7 +179,33 @@ export default function HomeScreen({ onNavigateToAuth }) {
               {/* Categories Bar */}
               <CategoryList
                 selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
+                onSelectCategory={handleCategoryPress}
+              />
+
+              {/* Flash Sale Section */}
+              <FlashSaleSection 
+                data={flashSaleData} 
+                onAddToCart={handleAddToCart}
+                onToggleFavorite={handleToggleFavorite}
+                onSeeAll={() => Alert.alert('Flash Sale', 'Viewing all flash sale items!')}
+              />
+
+              {/* Shop by Video (Shorts/Reels style) */}
+              <ShopByVideoSection
+                data={videoShortsData}
+                onVideoPress={(video) => Alert.alert('Play Video', `Playing: ${video.title}`)}
+              />
+
+              {/* Top Brands */}
+              <TopBrandsSection 
+                data={topBrandsData} 
+                onSelectBrand={(brand) => Alert.alert('Brand', `Viewing ${brand.name} products`)}
+              />
+
+              {/* Deal of the Day */}
+              <DealOfTheDaySection 
+                data={dealOfTheDayData} 
+                onShopNow={() => Alert.alert('Deal of the Day', `Shopping ${dealOfTheDayData.productName}`)} 
               />
 
               {/* Section 1: Today's Deals */}
@@ -212,7 +255,9 @@ export default function HomeScreen({ onNavigateToAuth }) {
                 </TouchableOpacity>
               </View>
 
-              {/* Horizontal Featured Products Scroll */}
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Featured For You</Text>
+              </View>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -227,6 +272,15 @@ export default function HomeScreen({ onNavigateToAuth }) {
                   />
                 ))}
               </ScrollView>
+
+              {/* Shop The Look (Hotspots) */}
+              <ShopTheLookSection data={shopTheLookData} />
+
+              {/* Collections Grid */}
+              <CollectionsGrid 
+                data={collectionsData}
+                onSelectCollection={(col) => Alert.alert('Collection', `Exploring ${col.title}`)}
+              />
             </ScrollView>
           </View>
 
@@ -267,6 +321,22 @@ export default function HomeScreen({ onNavigateToAuth }) {
         onClose={() => setIsCartModalVisible(false)}
         cartItems={cartItems}
         setCartItems={setCartItems}
+      />
+
+      {/* Today's Deals See All Modal */}
+      <TodaysDealsScreen
+        visible={isTodaysDealsVisible}
+        onClose={() => setIsTodaysDealsVisible(false)}
+        onAddToCart={handleAddToCart}
+        onToggleFavorite={handleToggleFavorite}
+      />
+
+      {/* Category Stories Viewer */}
+      <StoryViewerScreen
+        visible={isStoryVisible}
+        onClose={() => setIsStoryVisible(false)}
+        stories={activeStoryCategory?.stories}
+        categoryName={activeStoryCategory?.name}
       />
     </View>
   );

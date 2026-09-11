@@ -33,21 +33,24 @@ export default function CategoryList({ selectedCategory, onSelectCategory }) {
       >
         {categoriesData.map((item) => {
           const isSelected = selectedCategory === item.name;
+          const hasStories = item.stories && item.stories.length > 0;
           return (
             <TouchableOpacity
               key={item.id}
               style={styles.categoryItem}
-              onPress={() => onSelectCategory(item.name)}
+              onPress={() => onSelectCategory(item)}
               activeOpacity={0.7}
             >
-              <View
-                style={[
-                  styles.iconCircle,
-                  { backgroundColor: item.color },
-                  isSelected && styles.iconCircleSelected,
-                ]}
-              >
-                {renderCategoryIcon(item.icon, item.iconColor)}
+              <View style={[styles.storyRingWrapper, hasStories && styles.storyRingActive]}>
+                <View
+                  style={[
+                    styles.iconCircle,
+                    { backgroundColor: item.color },
+                    isSelected && !hasStories && styles.iconCircleSelected,
+                  ]}
+                >
+                  {renderCategoryIcon(item.icon, item.iconColor)}
+                </View>
               </View>
               <Text
                 style={[
@@ -84,7 +87,19 @@ const styles = StyleSheet.create({
     borderRadius: 27,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  storyRingWrapper: {
+    width: 62,
+    height: 62,
+    borderRadius: 31,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 6,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  storyRingActive: {
+    borderColor: colors.primary,
   },
   iconCircleSelected: {
     borderWidth: 2,
