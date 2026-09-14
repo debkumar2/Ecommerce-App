@@ -19,6 +19,7 @@ import CategoryList from '../components/CategoryList';
 import ProductCard from '../components/ProductCard';
 import HomePromoBanner from '../components/HomePromoBanner';
 import FlashSaleSection from '../components/FlashSaleSection';
+import NewArrivalsSection from '../components/NewArrivalsSection';
 import TopBrandsSection from '../components/TopBrandsSection';
 import ShopByVideoSection from '../components/ShopByVideoSection';
 import DealOfTheDaySection from '../components/DealOfTheDaySection';
@@ -32,7 +33,7 @@ import ProfileContent from './ProfileContent';
 import CartScreen from './CartScreen';
 import TodaysDealsScreen from './TodaysDealsScreen';
 import StoryViewerScreen from './StoryViewerScreen';
-import { todaysDealsData, featuredProductsData, initialCartData, flashSaleData, topBrandsData, collectionsData, videoShortsData, dealOfTheDayData, shopTheLookData } from '../data/mockData';
+import { todaysDealsData, featuredProductsData, initialCartData, flashSaleData, topBrandsData, collectionsData, videoShortsData, dealOfTheDayData, shopTheLookData, newArrivalsData } from '../data/mockData';
 import { colors } from '../theme/colors';
 
 const TABS = ['home', 'categories', 'orders', 'wishlist', 'profile'];
@@ -42,7 +43,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
   const [selectedCategory, setSelectedCategory] = useState('Fashion');
   const [cartItems, setCartItems] = useState(initialCartData);
   const [wishlistCount, setWishlistCount] = useState(3);
-  const [activeBottomTab, setActiveBottomTab] = useState('profile');
+  const [activeBottomTab, setActiveBottomTab] = useState('home');
   const [isCartModalVisible, setIsCartModalVisible] = useState(false);
   const [isTodaysDealsVisible, setIsTodaysDealsVisible] = useState(false);
   const [isStoryVisible, setIsStoryVisible] = useState(false);
@@ -180,6 +181,14 @@ export default function HomeScreen({ onNavigateToAuth }) {
               <CategoryList
                 selectedCategory={selectedCategory}
                 onSelectCategory={handleCategoryPress}
+              />
+
+              {/* New Arrivals Section */}
+              <NewArrivalsSection
+                data={newArrivalsData}
+                onAddToCart={handleAddToCart}
+                onToggleFavorite={handleToggleFavorite}
+                onSeeAll={() => Alert.alert('New Arrivals', 'Viewing all new arrivals!')}
               />
 
               {/* Flash Sale Section */}

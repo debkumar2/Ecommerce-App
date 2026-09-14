@@ -33,7 +33,23 @@ export const categoriesData = [
   { id: '8', name: 'Health & Wellness', items: '620+ items', color: '#FEFCE8', iconColor: '#EAB308', imageUrl: 'https://img.icons8.com/color/256/pills.png' },
   { id: '9', name: 'Mobiles & Accessories', items: '780+ items', color: '#EFF6FF', iconColor: '#3B82F6', imageUrl: 'https://img.icons8.com/color/256/iphone.png' },
   { id: '10', name: 'Books & Stationery', items: '360+ items', color: '#FFF1F2', iconColor: '#F43F5E', imageUrl: 'https://img.icons8.com/color/256/books.png' },
+  { id: '11', name: 'Automotive', items: '450+ items', color: '#F3F4F6', iconColor: '#4B5563', imageUrl: 'https://img.icons8.com/color/256/car.png' },
+  { id: '12', name: 'Pet Supplies', items: '890+ items', color: '#FFF7ED', iconColor: '#D97706', imageUrl: 'https://img.icons8.com/color/256/dog.png' },
+  { id: '13', name: 'Baby & Kids', items: '1,500+ items', color: '#FDF2F8', iconColor: '#DB2777', imageUrl: 'https://img.icons8.com/color/256/teddy-bear.png' },
+  { id: '14', name: 'Jewelry & Watches', items: '320+ items', color: '#FEF3C7', iconColor: '#D97706', imageUrl: 'https://img.icons8.com/color/256/diamond.png' },
+  { id: '15', name: 'Tools & Hardware', items: '820+ items', color: '#F1F5F9', iconColor: '#64748B', imageUrl: 'https://img.icons8.com/color/256/hammer.png' },
+  { id: '16', name: 'Office Supplies', items: '410+ items', color: '#F8FAFC', iconColor: '#334155', imageUrl: 'https://img.icons8.com/color/256/stapler.png' },
+  { id: '17', name: 'Music & Instruments', items: '150+ items', color: '#F5F3FF', iconColor: '#7C3AED', imageUrl: 'https://img.icons8.com/color/256/guitar.png' },
+  { id: '18', name: 'Travel & Luggage', items: '290+ items', color: '#F0FDF4', iconColor: '#16A34A', imageUrl: 'https://img.icons8.com/color/256/suitcase.png' },
+  { id: '19', name: 'Garden & Outdoors', items: '670+ items', color: '#ECFCCB', iconColor: '#65A30D', imageUrl: 'https://img.icons8.com/color/256/potted-plant.png' },
+  { id: '20', name: 'Art & Crafts', items: '530+ items', color: '#FFF1F2', iconColor: '#E11D48', imageUrl: 'https://img.icons8.com/color/256/paint-palette.png' },
+  { id: '21', name: 'Gifts & Party', items: '340+ items', color: '#FEF3C7', iconColor: '#B45309', imageUrl: 'https://img.icons8.com/color/256/gift.png' },
+  { id: '22', name: 'Software & Digital', items: '120+ items', color: '#EFF6FF', iconColor: '#1D4ED8', imageUrl: 'https://img.icons8.com/color/256/software-installer.png' },
+  { id: '23', name: 'Industrial', items: '90+ items', color: '#F1F5F9', iconColor: '#475569', imageUrl: 'https://img.icons8.com/color/256/factory.png' },
+  { id: '24', name: 'Vintage & Antiques', items: '180+ items', color: '#FAF5FF', iconColor: '#9333EA', imageUrl: 'https://img.icons8.com/color/256/pocket-watch.png' },
+  { id: '25', name: 'Collectibles', items: '250+ items', color: '#FFF7ED', iconColor: '#C2410C', imageUrl: 'https://img.icons8.com/color/256/coins.png' },
 ];
+
 
 export const todaysDealsData = [
   {
@@ -504,3 +520,58 @@ export const shopTheLookData = {
     }
   ]
 };
+
+export const newArrivalsData = [
+  {
+    id: 'na-1',
+    name: 'Oversized Hoodie',
+    price: 1999,
+    originalPrice: 2999,
+    discount: '33% OFF',
+    rating: 4.8,
+    reviewsCount: '120',
+    type: 'clothing',
+    badgeColor: '#10B981',
+    badgeText: 'NEW',
+    imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&q=80',
+  },
+  {
+    id: 'na-2',
+    name: 'Retro Running Sneakers',
+    price: 3499,
+    originalPrice: 4999,
+    discount: '30% OFF',
+    rating: 4.7,
+    reviewsCount: '85',
+    type: 'shoes',
+    badgeColor: '#10B981',
+    badgeText: 'NEW',
+    imageUrl: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=500&q=80',
+  },
+  {
+    id: 'na-3',
+    name: 'Minimalist Wrist Watch',
+    price: 2499,
+    originalPrice: 3999,
+    discount: '37% OFF',
+    rating: 4.9,
+    reviewsCount: '210',
+    type: 'watch',
+    badgeColor: '#10B981',
+    badgeText: 'NEW',
+    imageUrl: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500&q=80',
+  },
+  {
+    id: 'na-4',
+    name: 'Casual Denim Jacket',
+    price: 2899,
+    originalPrice: 4599,
+    discount: '37% OFF',
+    rating: 4.6,
+    reviewsCount: '150',
+    type: 'clothing',
+    badgeColor: '#10B981',
+    badgeText: 'NEW',
+    imageUrl: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=500&q=80',
+  },
+];

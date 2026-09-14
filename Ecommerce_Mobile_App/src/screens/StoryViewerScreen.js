@@ -77,7 +77,7 @@ export default function StoryViewerScreen({ visible, onClose, stories, categoryN
     <Modal visible={visible} animationType="fade" transparent={false} onRequestClose={onClose}>
       <View style={styles.container}>
         <Image source={{ uri: currentStory.imageUrl }} style={styles.image} resizeMode="cover" />
-        
+
         {/* Dark gradient overlay for readability at top and bottom */}
         <View style={styles.topGradient} />
         <View style={styles.bottomGradient} />
@@ -92,7 +92,7 @@ export default function StoryViewerScreen({ visible, onClose, stories, categoryN
                     style={[
                       styles.progressBar,
                       {
-                        width: index === currentIndex 
+                        width: index === currentIndex
                           ? progressAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] })
                           : index < currentIndex ? '100%' : '0%'
                       }
@@ -102,7 +102,7 @@ export default function StoryViewerScreen({ visible, onClose, stories, categoryN
               );
             })}
           </View>
-          
+
           <View style={styles.header}>
             <View style={styles.userInfo}>
               <Text style={styles.categoryText}>{categoryName || 'Story'}</Text>
@@ -122,8 +122,8 @@ export default function StoryViewerScreen({ visible, onClose, stories, categoryN
             <Text style={styles.subtitle}>{currentStory.subtitle}</Text>
             <Text style={styles.title}>{currentStory.title}</Text>
           </View>
-          
-          <TouchableOpacity style={styles.shopButton} activeOpacity={0.8} onPress={() => {}}>
+
+          <TouchableOpacity style={styles.shopButton} activeOpacity={0.8} onPress={() => { }}>
             <ChevronUp size={20} color={colors.primary} />
             <Text style={styles.shopButtonText}>{currentStory.linkText || 'Shop Now'}</Text>
           </TouchableOpacity>
