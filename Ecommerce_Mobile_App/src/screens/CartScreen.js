@@ -14,12 +14,14 @@ import {
 import { ArrowLeft, Trash2, Plus, Minus, Tag, ShoppingBag, ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react-native';
 import { colors } from '../theme/colors';
 import { initialCartData } from '../data/mockData';
+import CheckoutAddressModal from '../components/CheckoutAddressModal';
 
 export default function CartScreen({ visible, onClose, onCheckoutSuccess, cartItems: propCartItems, setCartItems: setPropCartItems }) {
   const [localCart, setLocalCart] = useState(initialCartData);
   const [promoCode, setPromoCode] = useState('');
   const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [isPromoApplied, setIsPromoApplied] = useState(false);
+  const [isAddressModalVisible, setIsAddressModalVisible] = useState(false);
 
   const cartItems = propCartItems || localCart;
   const updateCartItems = setPropCartItems || setLocalCart;
@@ -75,16 +77,18 @@ export default function CartScreen({ visible, onClose, onCheckoutSuccess, cartIt
 
   const handleCheckout = () => {
     if (cartItems.length === 0) return;
-    
-    const msg = `Order placed successfully for ₹${totalAmount.toLocaleString('en-IN')}! Thank you for shopping with ShopEase.`;
-    if (Platform.OS === 'web') alert(msg);
-    else Alert.alert('Order Confirmed! 🎉', msg);
+    setIsAddressModalVisible(true);
+  };
 
-    if (onCheckoutSuccess) {
-      onCheckoutSuccess();
-    }
-    updateCartItems([]);
-    if (onClose) onClose();
+  const handleOrderPlaced = (orderData) => {
+    setIsAddressModalVisible(false);
+    setTimeout(() => {
+      if (onCheckoutSuccess) {
+        onCheckoutSuccess(orderData);
+      }
+      updateCartItems([]);
+      if (onClose) onClose();
+    }, 0);
   };
 
   return (
@@ -291,6 +295,15 @@ export default function CartScreen({ visible, onClose, onCheckoutSuccess, cartIt
           </>
         )}
       </View>
+
+      {/* Delivery Address & Checkout Selection Modal */}
+      <CheckoutAddressModal
+        visible={isAddressModalVisible}
+        onClose={() => setIsAddressModalVisible(false)}
+        totalAmount={totalAmount}
+        cartItems={cartItems}
+        onOrderPlaced={handleOrderPlaced}
+      />
     </Modal>
   );
 }

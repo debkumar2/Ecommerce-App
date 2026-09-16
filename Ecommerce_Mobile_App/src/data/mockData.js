@@ -1,5 +1,5 @@
 export const categoriesData = [
-  { 
+  {
     id: '1', name: 'Fashion', items: '1,200+ items', color: '#FFF0F0', iconColor: '#EF4444', imageUrl: 'https://img.icons8.com/color/256/dress-front-view.png',
     stories: [
       { id: 's1', imageUrl: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80', title: 'Summer Collection', subtitle: 'New Arrivals', linkText: 'Shop Now' },
@@ -7,21 +7,21 @@ export const categoriesData = [
       { id: 's3', imageUrl: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&q=80', title: 'Streetwear', subtitle: 'Urban Vibes', linkText: 'Explore' }
     ]
   },
-  { 
+  {
     id: '2', name: 'Electronics', items: '850+ items', color: '#F0F9FF', iconColor: '#3B82F6', imageUrl: 'https://img.icons8.com/color/256/laptop--v1.png',
     stories: [
       { id: 's4', imageUrl: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&q=80', title: 'Work From Home', subtitle: 'Setup Guide', linkText: 'Upgrade' },
       { id: 's5', imageUrl: 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=800&q=80', title: 'Latest Gadgets', subtitle: 'Tech Deals', linkText: 'Discover' }
     ]
   },
-  { 
+  {
     id: '3', name: 'Home & Living', items: '670+ items', color: '#ECFDF5', iconColor: '#10B981', imageUrl: 'https://img.icons8.com/color/256/armchair.png',
     stories: [
       { id: 's6', imageUrl: 'https://images.unsplash.com/photo-1618220179428-22790b46a0eb?w=800&q=80', title: 'Minimalist Spaces', subtitle: 'Interior Design', linkText: 'Shop Decor' },
       { id: 's7', imageUrl: 'https://images.unsplash.com/photo-1583847268964-b28ce8f31161?w=800&q=80', title: 'Cozy Corners', subtitle: 'Living Room', linkText: 'Find Your Vibe' }
     ]
   },
-  { 
+  {
     id: '4', name: 'Beauty & Personal Care', items: '950+ items', color: '#FDF4FF', iconColor: '#EC4899', imageUrl: 'https://img.icons8.com/color/256/perfume-bottle.png',
     stories: [
       { id: 's8', imageUrl: 'https://images.unsplash.com/photo-1596462502278-27bf85033e5a?w=800&q=80', title: 'Skincare Routine', subtitle: 'Glow Up', linkText: 'Shop Products' }
@@ -61,6 +61,7 @@ export const todaysDealsData = [
     rating: 4.5,
     reviewsCount: '1.2k',
     type: 'headphones',
+    category: 'Electronics',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
   },
@@ -73,6 +74,7 @@ export const todaysDealsData = [
     rating: 4.3,
     reviewsCount: '980',
     type: 'shoes',
+    category: 'Fashion',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
   },
@@ -85,6 +87,7 @@ export const todaysDealsData = [
     rating: 4.4,
     reviewsCount: '1.8k',
     type: 'watch',
+    category: 'Electronics',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
   },
@@ -97,6 +100,7 @@ export const todaysDealsData = [
     rating: 4.7,
     reviewsCount: '850',
     type: 'keyboard',
+    category: 'Electronics',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1595225476474-87563907a212?w=500&q=80',
   },
@@ -109,6 +113,7 @@ export const todaysDealsData = [
     rating: 4.6,
     reviewsCount: '420',
     type: 'furniture',
+    category: 'Home & Living',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=500&q=80',
   },
@@ -121,6 +126,7 @@ export const todaysDealsData = [
     rating: 4.8,
     reviewsCount: '2.4k',
     type: 'mouse',
+    category: 'Electronics',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&q=80',
   },
@@ -133,6 +139,7 @@ export const todaysDealsData = [
     rating: 4.5,
     reviewsCount: '920',
     type: 'camera',
+    category: 'Electronics',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1512753360435-329c4535a9a7?w=500&q=80',
   },
@@ -145,6 +152,7 @@ export const todaysDealsData = [
     rating: 4.6,
     reviewsCount: '1.5k',
     type: 'speaker',
+    category: 'Electronics',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1608043152269-411a51152d11?w=500&q=80',
   },
@@ -157,6 +165,7 @@ export const todaysDealsData = [
     rating: 4.7,
     reviewsCount: '3.1k',
     type: 'battery',
+    category: 'Electronics',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&q=80',
   },
@@ -169,6 +178,7 @@ export const todaysDealsData = [
     rating: 4.8,
     reviewsCount: '1.8k',
     type: 'headphones',
+    category: 'Electronics',
     badgeColor: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&q=80',
   },
@@ -211,13 +221,13 @@ export const ordersData = [
     placedDate: '01 Mar 2024',
     status: 'Processing',
     statusDateText: "Preparing for shipment\nWe'll notify you soon",
-    actionText: 'View Details',
+    actionText: 'Track Order',
     product: {
       name: "Women's Handbag",
       variants: 'Color: Pink',
       price: '₹1,299',
       qty: 1,
-      imageUrl: 'https://img.icons8.com/color/256/womans-bag.png'
+      imageUrl: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&q=80'
     }
   },
   {
@@ -226,13 +236,13 @@ export const ordersData = [
     placedDate: '20 Feb 2024',
     status: 'Cancelled',
     statusDateText: 'Cancelled on\n21 Feb 2024',
-    actionText: 'View Details',
+    actionText: 'Track Order',
     product: {
       name: 'Wireless Headphones',
       variants: 'Color: Black',
       price: '₹1,999',
       qty: 1,
-      imageUrl: 'https://img.icons8.com/color/256/headphones.png'
+      imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80'
     }
   }
 ];
@@ -247,6 +257,7 @@ export const featuredProductsData = [
     rating: 4.6,
     reviewsCount: '2.1k',
     type: 'bag',
+    category: 'Fashion',
     imageUrl: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&q=80',
   },
   {
@@ -258,6 +269,7 @@ export const featuredProductsData = [
     rating: 4.8,
     reviewsCount: '5.4k',
     type: 'phone',
+    category: 'Mobiles & Accessories',
     imageUrl: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80',
   },
   {
@@ -269,6 +281,7 @@ export const featuredProductsData = [
     rating: 4.7,
     reviewsCount: '890',
     type: 'perfume',
+    category: 'Beauty & Personal Care',
     imageUrl: 'https://images.unsplash.com/photo-1523293115678-d2900f5b1d65?w=500&q=80',
   },
   {
@@ -280,6 +293,7 @@ export const featuredProductsData = [
     rating: 4.5,
     reviewsCount: '1.5k',
     type: 'shoes',
+    category: 'Fashion',
     imageUrl: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&q=80',
   },
 ];
@@ -295,6 +309,7 @@ export const wishlistData = [
     reviewsCount: '1.2k',
     inStock: true,
     type: 'headphones',
+    category: 'Electronics',
     imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
   },
   {
@@ -307,6 +322,7 @@ export const wishlistData = [
     reviewsCount: '980',
     inStock: true,
     type: 'shoes',
+    category: 'Sports & Fitness',
     imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
   },
   {
@@ -319,6 +335,7 @@ export const wishlistData = [
     reviewsCount: '2.1k',
     inStock: true,
     type: 'bag',
+    category: 'Fashion',
     imageUrl: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&q=80',
   },
   {
@@ -331,6 +348,7 @@ export const wishlistData = [
     reviewsCount: '1.8k',
     inStock: false,
     type: 'watch',
+    category: 'Mobiles & Accessories',
     imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
   },
 ];
@@ -375,6 +393,7 @@ export const flashSaleData = [
     rating: 4.9,
     reviewsCount: '12k',
     type: 'headphones',
+    category: 'Mobiles & Accessories',
     badgeColor: '#F59E0B',
     imageUrl: 'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=500&q=80',
   },
@@ -387,6 +406,7 @@ export const flashSaleData = [
     rating: 4.8,
     reviewsCount: '8.5k',
     type: 'electronics',
+    category: 'Electronics',
     badgeColor: '#F59E0B',
     imageUrl: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=500&q=80',
   },
@@ -399,6 +419,7 @@ export const flashSaleData = [
     rating: 4.7,
     reviewsCount: '3.2k',
     type: 'home',
+    category: 'Home & Living',
     badgeColor: '#F59E0B',
     imageUrl: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=500&q=80',
   },
@@ -531,6 +552,7 @@ export const newArrivalsData = [
     rating: 4.8,
     reviewsCount: '120',
     type: 'clothing',
+    category: 'Fashion',
     badgeColor: '#10B981',
     badgeText: 'NEW',
     imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=80',
@@ -550,6 +572,7 @@ export const newArrivalsData = [
     rating: 4.7,
     reviewsCount: '85',
     type: 'shoes',
+    category: 'Sports & Fitness',
     badgeColor: '#10B981',
     badgeText: 'NEW',
     imageUrl: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=800&q=80',
@@ -569,6 +592,7 @@ export const newArrivalsData = [
     rating: 4.9,
     reviewsCount: '210',
     type: 'watch',
+    category: 'Jewelry & Watches',
     badgeColor: '#10B981',
     badgeText: 'NEW',
     imageUrl: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&q=80',
@@ -588,6 +612,7 @@ export const newArrivalsData = [
     rating: 4.6,
     reviewsCount: '150',
     type: 'clothing',
+    category: 'Fashion',
     badgeColor: '#10B981',
     badgeText: 'NEW',
     imageUrl: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=800&q=80',
@@ -599,3 +624,125 @@ export const newArrivalsData = [
     ],
   },
 ];
+
+export const getProductsByCategory = (categoryName) => {
+  const allProducts = [
+    ...newArrivalsData,
+    ...todaysDealsData,
+    ...flashSaleData,
+    ...featuredProductsData,
+  ];
+
+  if (!categoryName || categoryName === 'All') {
+    return allProducts;
+  }
+
+  const matched = allProducts.filter(
+    (item) => item.category && item.category.toLowerCase() === categoryName.toLowerCase()
+  );
+
+  if (matched.length > 0) return matched;
+
+  // Rich fallback items for any specific category that has no items yet
+  return [
+    {
+      id: `cat-${categoryName}-1`,
+      name: `Premium ${categoryName} Collection Item`,
+      price: 1999,
+      originalPrice: 3499,
+      discount: '42% OFF',
+      rating: 4.8,
+      reviewsCount: '320',
+      category: categoryName,
+      type: 'general',
+      badgeText: 'POPULAR',
+      badgeColor: '#10B981',
+      imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
+    },
+    {
+      id: `cat-${categoryName}-2`,
+      name: `Essential ${categoryName} Edition`,
+      price: 2899,
+      originalPrice: 4299,
+      discount: '32% OFF',
+      rating: 4.7,
+      reviewsCount: '190',
+      category: categoryName,
+      type: 'general',
+      badgeText: 'NEW',
+      badgeColor: '#3B82F6',
+      imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80',
+    },
+    {
+      id: `cat-${categoryName}-3`,
+      name: `Trending ${categoryName} Special`,
+      price: 1299,
+      originalPrice: 1999,
+      discount: '35% OFF',
+      rating: 4.6,
+      reviewsCount: '450',
+      category: categoryName,
+      type: 'general',
+      badgeText: 'HOT',
+      badgeColor: '#EF4444',
+      imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80',
+    },
+    {
+      id: `cat-${categoryName}-4`,
+      name: `Pro ${categoryName} Gear`,
+      price: 4999,
+      originalPrice: 7499,
+      discount: '33% OFF',
+      rating: 4.9,
+      reviewsCount: '810',
+      category: categoryName,
+      type: 'general',
+      badgeText: 'TOP RATED',
+      badgeColor: '#8B5CF6',
+      imageUrl: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=800&q=80',
+    },
+  ];
+};
+
+export const storedAddressesData = [
+  {
+    id: 'addr-1',
+    name: 'Debkumar Johnson',
+    phone: '+91 98765 43210',
+    type: 'HOME',
+    isDefault: true,
+    flatNo: 'Flat 402, Green Valley Residency',
+    street: 'MG Road, Indiranagar',
+    city: 'Bengaluru',
+    state: 'Karnataka',
+    pincode: '560038',
+    fullAddress: 'Flat 402, Green Valley Residency, MG Road, Indiranagar, Bengaluru, Karnataka - 560038',
+  },
+  {
+    id: 'addr-2',
+    name: 'Debkumar Johnson',
+    phone: '+91 98765 43210',
+    type: 'WORK',
+    isDefault: false,
+    flatNo: 'Tech Park Tower B, 5th Floor',
+    street: 'Outer Ring Road, Marathahalli',
+    city: 'Bengaluru',
+    state: 'Karnataka',
+    pincode: '560103',
+    fullAddress: 'Tech Park Tower B, 5th Floor, Outer Ring Road, Marathahalli, Bengaluru, Karnataka - 560103',
+  },
+  {
+    id: 'addr-3',
+    name: 'Sarah Johnson (Parents)',
+    phone: '+91 91234 56789',
+    type: 'OTHER',
+    isDefault: false,
+    flatNo: 'Plot 14, Sunrise Enclave',
+    street: 'Park Street, Sector 5',
+    city: 'Kolkata',
+    state: 'West Bengal',
+    pincode: '700016',
+    fullAddress: 'Plot 14, Sunrise Enclave, Park Street, Sector 5, Kolkata, West Bengal - 700016',
+  },
+];
+

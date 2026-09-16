@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import OrderCard from '../components/OrderCard';
+import OrderTrackingModal from './OrderTrackingModal';
 import { ordersData } from '../data/mockData';
 import { colors } from '../theme/colors';
 
@@ -8,10 +9,17 @@ const FILTERS = ['All Orders', 'Processing', 'Shipped', 'Delivered', 'Cancelled'
 
 export default function OrdersContent() {
   const [activeFilter, setActiveFilter] = useState('All Orders');
+  const [selectedTrackingOrder, setSelectedTrackingOrder] = useState(null);
+  const [isTrackingModalVisible, setIsTrackingModalVisible] = useState(false);
 
   const filteredOrders = activeFilter === 'All Orders' 
     ? ordersData 
     : ordersData.filter(order => order.status === activeFilter);
+
+  const handleTrackOrder = (order) => {
+    setSelectedTrackingOrder(order);
+    setIsTrackingModalVisible(true);
+  };
 
   return (
     <View style={styles.container}>
@@ -55,7 +63,7 @@ export default function OrdersContent() {
       <FlatList
         data={filteredOrders}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <OrderCard order={item} />}
+        renderItem={({ item }) => <OrderCard order={item} onTrackOrder={handleTrackOrder} />}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
@@ -63,6 +71,13 @@ export default function OrdersContent() {
             <Text style={styles.emptyText}>No orders found.</Text>
           </View>
         }
+      />
+
+      {/* Interactive Order Tracking Modal */}
+      <OrderTrackingModal
+        visible={isTrackingModalVisible}
+        order={selectedTrackingOrder}
+        onClose={() => setIsTrackingModalVisible(false)}
       />
     </View>
   );

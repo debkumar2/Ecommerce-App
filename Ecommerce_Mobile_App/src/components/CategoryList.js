@@ -1,13 +1,17 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import { Shirt, Laptop, Armchair, Sparkles, Activity, MoreHorizontal } from 'lucide-react-native';
+import { Shirt, Laptop, Armchair, Sparkles, Activity, MoreHorizontal, LayoutGrid } from 'lucide-react-native';
 import { categoriesData } from '../data/mockData';
 import { colors } from '../theme/colors';
+
+const ALL_CATEGORY = { id: 'all', name: 'All', color: '#F3F4F6', iconColor: '#374151', icon: 'grid' };
 
 export default function CategoryList({ selectedCategory, onSelectCategory }) {
   const renderCategoryIcon = (iconName, iconColor) => {
     const iconProps = { size: 22, color: iconColor };
     switch (iconName) {
+      case 'grid':
+        return <LayoutGrid {...iconProps} />;
       case 'shirt':
         return <Shirt {...iconProps} />;
       case 'laptop':
@@ -24,6 +28,8 @@ export default function CategoryList({ selectedCategory, onSelectCategory }) {
     }
   };
 
+  const listData = [ALL_CATEGORY, ...categoriesData];
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -31,8 +37,8 @@ export default function CategoryList({ selectedCategory, onSelectCategory }) {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {categoriesData.map((item) => {
-          const isSelected = selectedCategory === item.name;
+        {listData.map((item) => {
+          const isSelected = selectedCategory === item.name || (!selectedCategory && item.name === 'All');
           const hasStories = item.stories && item.stories.length > 0;
           return (
             <TouchableOpacity

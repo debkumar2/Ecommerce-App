@@ -34,14 +34,16 @@ import CartScreen from './CartScreen';
 import TodaysDealsScreen from './TodaysDealsScreen';
 import StoryViewerScreen from './StoryViewerScreen';
 import ProductDetailsScreen from './ProductDetailsScreen';
-import { todaysDealsData, featuredProductsData, initialCartData, flashSaleData, topBrandsData, collectionsData, videoShortsData, dealOfTheDayData, shopTheLookData, newArrivalsData } from '../data/mockData';
+import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
+import OrderSuccessModal from '../components/OrderSuccessModal';
+import { todaysDealsData, featuredProductsData, initialCartData, flashSaleData, topBrandsData, collectionsData, videoShortsData, dealOfTheDayData, shopTheLookData, newArrivalsData, getProductsByCategory } from '../data/mockData';
 import { colors } from '../theme/colors';
 
 const TABS = ['home', 'categories', 'orders', 'wishlist', 'profile'];
 
 export default function HomeScreen({ onNavigateToAuth }) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Fashion');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [cartItems, setCartItems] = useState(initialCartData);
   const [wishlistCount, setWishlistCount] = useState(3);
   const [activeBottomTab, setActiveBottomTab] = useState('home');
@@ -51,6 +53,10 @@ export default function HomeScreen({ onNavigateToAuth }) {
   const [activeStoryCategory, setActiveStoryCategory] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isProductDetailsVisible, setIsProductDetailsVisible] = useState(false);
+  const [addedProduct, setAddedProduct] = useState(null);
+  const [isAddToCartSuccessVisible, setIsAddToCartSuccessVisible] = useState(false);
+  const [completedOrderData, setCompletedOrderData] = useState(null);
+  const [isOrderSuccessVisible, setIsOrderSuccessVisible] = useState(false);
   const [contentWidth, setContentWidth] = useState(Dimensions.get('window').width);
 
   const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -76,12 +82,13 @@ export default function HomeScreen({ onNavigateToAuth }) {
           quantity: 1,
           imageUrl: item.imageUrl,
           variant: item.variant || 'Standard',
+          category: item.category || 'General',
         },
       ];
     });
-    const msg = `Added "${item.name}" to your cart!`;
-    if (Platform.OS === 'web') alert(msg);
-    else Alert.alert('Cart Updated', msg);
+
+    setAddedProduct(item);
+    setIsAddToCartSuccessVisible(true);
   };
 
   const handleToggleFavorite = (item, isFav) => {
@@ -140,6 +147,8 @@ export default function HomeScreen({ onNavigateToAuth }) {
     outputRange: [0, -contentWidth, -contentWidth * 2, -contentWidth * 3, -contentWidth * 4],
   });
 
+  const categoryProducts = getProductsByCategory(selectedCategory);
+
   return (
     <View style={styles.safeArea}>
       {/* Standardized Top Header for all screens */}
@@ -191,123 +200,163 @@ export default function HomeScreen({ onNavigateToAuth }) {
                 onSelectCategory={handleCategoryPress}
               />
 
-              {/* New Arrivals Section */}
-              <NewArrivalsSection
-                data={newArrivalsData}
-                onAddToCart={handleAddToCart}
-                onToggleFavorite={handleToggleFavorite}
-                onSelectProduct={handleSelectProduct}
-                onSeeAll={() => Alert.alert('New Arrivals', 'Viewing all new arrivals!')}
-              />
+              {/* Filtered Category View or Full Home Content */}
+              {selectedCategory && selectedCategory !== 'All' ? (
+                <View style={styles.categoryFilteredContainer}>
+                  <View style={styles.categoryActiveBanner}>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.categoryActiveTitle}>{selectedCategory}</Text>
+                      <Text style={styles.categoryActiveSubtitle}>
+                        Showing {categoryProducts.length} items in {selectedCategory}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      style={styles.clearCategoryBtn}
+                      onPress={() => setSelectedCategory('All')}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={styles.clearCategoryBtnText}>Show All</Text>
+                    </TouchableOpacity>
+                  </View>
 
-              {/* Flash Sale Section */}
-              <FlashSaleSection 
-                data={flashSaleData} 
-                onAddToCart={handleAddToCart}
-                onToggleFavorite={handleToggleFavorite}
-                onSelectProduct={handleSelectProduct}
-                onSeeAll={() => Alert.alert('Flash Sale', 'Viewing all flash sale items!')}
-              />
-
-              {/* Shop by Video (Shorts/Reels style) */}
-              <ShopByVideoSection
-                data={videoShortsData}
-                onVideoPress={(video) => Alert.alert('Play Video', `Playing: ${video.title}`)}
-              />
-
-              {/* Top Brands */}
-              <TopBrandsSection 
-                data={topBrandsData} 
-                onSelectBrand={(brand) => Alert.alert('Brand', `Viewing ${brand.name} products`)}
-              />
-
-              {/* Deal of the Day */}
-              <DealOfTheDaySection 
-                data={dealOfTheDayData} 
-                onShopNow={() => Alert.alert('Deal of the Day', `Shopping ${dealOfTheDayData.productName}`)} 
-              />
-
-              {/* Section 1: Today's Deals */}
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Today's Deals</Text>
-                <TouchableOpacity
-                  style={styles.seeAllRow}
-                  onPress={handleSeeAllDeals}
-                  activeOpacity={0.7}
-                >
-                  <Text style={styles.seeAllText}>See All</Text>
-                  <ChevronRight size={16} color={colors.primary} />
-                </TouchableOpacity>
-              </View>
-
-              {/* Horizontal Deals Product List */}
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.horizontalProductsScroll}
-              >
-                {todaysDealsData.map((item) => (
-                  <ProductCard
-                    key={item.id}
-                    item={item}
+                  <View style={styles.categoryProductsGrid}>
+                    {categoryProducts.map((item) => (
+                      <ProductCard
+                        key={item.id}
+                        item={item}
+                        onAddToCart={handleAddToCart}
+                        onToggleFavorite={handleToggleFavorite}
+                        onPress={handleSelectProduct}
+                        containerStyle={styles.categoryCardStyle}
+                      />
+                    ))}
+                  </View>
+                </View>
+              ) : (
+                <>
+                  {/* New Arrivals Section */}
+                  <NewArrivalsSection
+                    data={newArrivalsData}
                     onAddToCart={handleAddToCart}
                     onToggleFavorite={handleToggleFavorite}
-                    onPress={handleSelectProduct}
+                    onSelectProduct={handleSelectProduct}
+                    onSeeAll={() => Alert.alert('New Arrivals', 'Viewing all new arrivals!')}
                   />
-                ))}
-              </ScrollView>
 
-              {/* Section 2: Secondary Home Upgrade Promo Banner */}
-              <HomePromoBanner
-                onShopNowPress={() => Alert.alert('Home Upgrade', 'Exploring Home & Living Deals!')}
-              />
-
-              {/* Section 3: Featured Products */}
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Featured Products</Text>
-                <TouchableOpacity
-                  style={styles.seeAllRow}
-                  onPress={handleSeeAllFeatured}
-                  activeOpacity={0.7}
-                >
-                  <Text style={styles.seeAllText}>See All</Text>
-                  <ChevronRight size={16} color={colors.primary} />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Featured For You</Text>
-              </View>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.horizontalProductsScroll}
-              >
-                {featuredProductsData.map((item) => (
-                  <ProductCard
-                    key={item.id}
-                    item={item}
+                  {/* Flash Sale Section */}
+                  <FlashSaleSection 
+                    data={flashSaleData} 
                     onAddToCart={handleAddToCart}
                     onToggleFavorite={handleToggleFavorite}
-                    onPress={handleSelectProduct}
+                    onSelectProduct={handleSelectProduct}
+                    onSeeAll={() => Alert.alert('Flash Sale', 'Viewing all flash sale items!')}
                   />
-                ))}
-              </ScrollView>
 
-              {/* Shop The Look (Hotspots) */}
-              <ShopTheLookSection data={shopTheLookData} />
+                  {/* Shop by Video (Shorts/Reels style) */}
+                  <ShopByVideoSection
+                    data={videoShortsData}
+                    onVideoPress={(video) => Alert.alert('Play Video', `Playing: ${video.title}`)}
+                  />
 
-              {/* Collections Grid */}
-              <CollectionsGrid 
-                data={collectionsData}
-                onSelectCollection={(col) => Alert.alert('Collection', `Exploring ${col.title}`)}
-              />
+                  {/* Top Brands */}
+                  <TopBrandsSection 
+                    data={topBrandsData} 
+                    onSelectBrand={(brand) => Alert.alert('Brand', `Viewing ${brand.name} products`)}
+                  />
+
+                  {/* Deal of the Day */}
+                  <DealOfTheDaySection 
+                    data={dealOfTheDayData} 
+                    onShopNow={() => Alert.alert('Deal of the Day', `Shopping ${dealOfTheDayData.productName}`)} 
+                  />
+
+                  {/* Section 1: Today's Deals */}
+                  <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionTitle}>Today's Deals</Text>
+                    <TouchableOpacity
+                      style={styles.seeAllRow}
+                      onPress={handleSeeAllDeals}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={styles.seeAllText}>See All</Text>
+                      <ChevronRight size={16} color={colors.primary} />
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* Horizontal Deals Product List */}
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.horizontalProductsScroll}
+                  >
+                    {todaysDealsData.map((item) => (
+                      <ProductCard
+                        key={item.id}
+                        item={item}
+                        onAddToCart={handleAddToCart}
+                        onToggleFavorite={handleToggleFavorite}
+                        onPress={handleSelectProduct}
+                      />
+                    ))}
+                  </ScrollView>
+
+                  {/* Section 2: Secondary Home Upgrade Promo Banner */}
+                  <HomePromoBanner
+                    onShopNowPress={() => Alert.alert('Home Upgrade', 'Exploring Home & Living Deals!')}
+                  />
+
+                  {/* Section 3: Featured Products */}
+                  <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionTitle}>Featured Products</Text>
+                    <TouchableOpacity
+                      style={styles.seeAllRow}
+                      onPress={handleSeeAllFeatured}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={styles.seeAllText}>See All</Text>
+                      <ChevronRight size={16} color={colors.primary} />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionTitle}>Featured For You</Text>
+                  </View>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.horizontalProductsScroll}
+                  >
+                    {featuredProductsData.map((item) => (
+                      <ProductCard
+                        key={item.id}
+                        item={item}
+                        onAddToCart={handleAddToCart}
+                        onToggleFavorite={handleToggleFavorite}
+                        onPress={handleSelectProduct}
+                      />
+                    ))}
+                  </ScrollView>
+
+                  {/* Shop The Look (Hotspots) */}
+                  <ShopTheLookSection data={shopTheLookData} />
+
+                  {/* Collections Grid */}
+                  <CollectionsGrid 
+                    data={collectionsData}
+                    onSelectCollection={(col) => Alert.alert('Collection', `Exploring ${col.title}`)}
+                  />
+                </>
+              )}
             </ScrollView>
           </View>
 
           {/* 1: Categories Page */}
           <View style={[styles.slidePage, { width: contentWidth }]}>
-            <CategoriesContent />
+            <CategoriesContent
+              onSelectProduct={handleSelectProduct}
+              onAddToCart={handleAddToCart}
+              onToggleFavorite={handleToggleFavorite}
+            />
           </View>
 
           {/* 2: Orders Page */}
@@ -342,6 +391,12 @@ export default function HomeScreen({ onNavigateToAuth }) {
         onClose={() => setIsCartModalVisible(false)}
         cartItems={cartItems}
         setCartItems={setCartItems}
+        onCheckoutSuccess={(orderData) => {
+          setCartItems([]);
+          setIsCartModalVisible(false);
+          setCompletedOrderData(orderData);
+          setIsOrderSuccessVisible(true);
+        }}
       />
 
       {/* Today's Deals See All Modal */}
@@ -371,6 +426,29 @@ export default function HomeScreen({ onNavigateToAuth }) {
         onBuyNow={(item) => {
           setIsProductDetailsVisible(false);
           setIsCartModalVisible(true);
+        }}
+      />
+
+      {/* Added to Cart Success Modal */}
+      <AddToCartSuccessModal
+        visible={isAddToCartSuccessVisible}
+        onClose={() => setIsAddToCartSuccessVisible(false)}
+        product={addedProduct}
+        totalCartCount={totalCartCount}
+        onViewCart={() => setIsCartModalVisible(true)}
+      />
+
+      {/* Order Placed Success Modal (COD / Online) */}
+      <OrderSuccessModal
+        visible={isOrderSuccessVisible}
+        onClose={() => {
+          setIsOrderSuccessVisible(false);
+          handleBottomTabPress('home');
+        }}
+        orderData={completedOrderData}
+        onGoToHome={() => {
+          setIsOrderSuccessVisible(false);
+          handleBottomTabPress('home');
         }}
       />
     </View>
@@ -432,5 +510,54 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.textSecondary,
     fontWeight: '600',
+  },
+  categoryFilteredContainer: {
+    marginHorizontal: 16,
+    marginTop: 12,
+    marginBottom: 20,
+  },
+  categoryActiveBanner: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#EFF6FF',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#BFDBFE',
+    marginBottom: 16,
+  },
+  categoryActiveTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#1E3A8A',
+  },
+  categoryActiveSubtitle: {
+    fontSize: 12,
+    color: '#3B82F6',
+    marginTop: 2,
+    fontWeight: '600',
+  },
+  clearCategoryBtn: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 10,
+  },
+  clearCategoryBtnText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  categoryProductsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  categoryCardStyle: {
+    width: '48%',
+    marginRight: 0,
+    marginBottom: 16,
   },
 });

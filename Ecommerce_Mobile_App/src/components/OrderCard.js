@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { ChevronRight, Package, Truck, Clock, XCircle, Calendar } from 'lucide-react-native';
 import { colors } from '../theme/colors';
 
-export default function OrderCard({ order }) {
+export default function OrderCard({ order, onTrackOrder }) {
   const getStatusStyle = (status) => {
     switch (status) {
       case 'Delivered':
@@ -23,8 +23,18 @@ export default function OrderCard({ order }) {
   const StatusIcon = statusStyle.Icon;
   const RightIcon = statusStyle.rightIcon;
 
+  const handleCardPress = () => {
+    if (onTrackOrder) {
+      onTrackOrder(order);
+    }
+  };
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={handleCardPress}
+      activeOpacity={0.9}
+    >
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
@@ -46,7 +56,7 @@ export default function OrderCard({ order }) {
       <View style={styles.productSection}>
         {/* Left: Image */}
         <View style={styles.imageContainer}>
-          <Image source={{ uri: order.product.imageUrl }} style={styles.image} resizeMode="contain" />
+          <Image source={{ uri: order.product.imageUrl }} style={styles.image} resizeMode="cover" />
         </View>
 
         {/* Middle: Details */}
@@ -65,12 +75,16 @@ export default function OrderCard({ order }) {
             <RightIcon size={14} color={colors.textSecondary} style={styles.rightIcon} />
             <Text style={styles.statusDateText}>{order.statusDateText}</Text>
           </View>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={handleCardPress}
+            activeOpacity={0.7}
+          >
             <Text style={styles.actionButtonText}>{order.actionText}</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
