@@ -4,7 +4,7 @@ import { Timer, ChevronRight } from 'lucide-react-native';
 import ProductCard from './ProductCard';
 import { colors } from '../theme/colors';
 
-export default function FlashSaleSection({ data, onAddToCart, onToggleFavorite, onSeeAll }) {
+export default function FlashSaleSection({ data, onAddToCart, onToggleFavorite, onSeeAll, onSelectProduct }) {
   const [timeLeft, setTimeLeft] = useState(3600 * 2 + 1500); // 2h 25m
 
   useEffect(() => {
@@ -48,6 +48,7 @@ export default function FlashSaleSection({ data, onAddToCart, onToggleFavorite, 
             item={item}
             onAddToCart={onAddToCart}
             onToggleFavorite={onToggleFavorite}
+            onPress={onSelectProduct}
           />
         ))}
       </ScrollView>

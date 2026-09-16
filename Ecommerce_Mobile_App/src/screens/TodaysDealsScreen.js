@@ -12,7 +12,7 @@ import { colors } from '../theme/colors';
 import ProductCard from '../components/ProductCard';
 import { todaysDealsData } from '../data/mockData';
 
-export default function TodaysDealsScreen({ visible, onClose, onAddToCart, onToggleFavorite }) {
+export default function TodaysDealsScreen({ visible, onClose, onAddToCart, onToggleFavorite, onSelectProduct }) {
   return (
     <Modal
       visible={visible}
@@ -40,6 +40,7 @@ export default function TodaysDealsScreen({ visible, onClose, onAddToCart, onTog
                 item={item}
                 onAddToCart={onAddToCart}
                 onToggleFavorite={onToggleFavorite}
+                onPress={onSelectProduct}
                 containerStyle={styles.cardContainer}
               />
             ))}

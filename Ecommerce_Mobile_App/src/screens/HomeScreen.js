@@ -33,6 +33,7 @@ import ProfileContent from './ProfileContent';
 import CartScreen from './CartScreen';
 import TodaysDealsScreen from './TodaysDealsScreen';
 import StoryViewerScreen from './StoryViewerScreen';
+import ProductDetailsScreen from './ProductDetailsScreen';
 import { todaysDealsData, featuredProductsData, initialCartData, flashSaleData, topBrandsData, collectionsData, videoShortsData, dealOfTheDayData, shopTheLookData, newArrivalsData } from '../data/mockData';
 import { colors } from '../theme/colors';
 
@@ -48,6 +49,8 @@ export default function HomeScreen({ onNavigateToAuth }) {
   const [isTodaysDealsVisible, setIsTodaysDealsVisible] = useState(false);
   const [isStoryVisible, setIsStoryVisible] = useState(false);
   const [activeStoryCategory, setActiveStoryCategory] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isProductDetailsVisible, setIsProductDetailsVisible] = useState(false);
   const [contentWidth, setContentWidth] = useState(Dimensions.get('window').width);
 
   const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -83,6 +86,11 @@ export default function HomeScreen({ onNavigateToAuth }) {
 
   const handleToggleFavorite = (item, isFav) => {
     setWishlistCount(isFav ? wishlistCount + 1 : Math.max(0, wishlistCount - 1));
+  };
+
+  const handleSelectProduct = (product) => {
+    setSelectedProduct(product);
+    setIsProductDetailsVisible(true);
   };
 
   const handleCategoryPress = (categoryItem) => {
@@ -188,6 +196,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
                 data={newArrivalsData}
                 onAddToCart={handleAddToCart}
                 onToggleFavorite={handleToggleFavorite}
+                onSelectProduct={handleSelectProduct}
                 onSeeAll={() => Alert.alert('New Arrivals', 'Viewing all new arrivals!')}
               />
 
@@ -196,6 +205,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
                 data={flashSaleData} 
                 onAddToCart={handleAddToCart}
                 onToggleFavorite={handleToggleFavorite}
+                onSelectProduct={handleSelectProduct}
                 onSeeAll={() => Alert.alert('Flash Sale', 'Viewing all flash sale items!')}
               />
 
@@ -242,6 +252,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
                     item={item}
                     onAddToCart={handleAddToCart}
                     onToggleFavorite={handleToggleFavorite}
+                    onPress={handleSelectProduct}
                   />
                 ))}
               </ScrollView>
@@ -278,6 +289,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
                     item={item}
                     onAddToCart={handleAddToCart}
                     onToggleFavorite={handleToggleFavorite}
+                    onPress={handleSelectProduct}
                   />
                 ))}
               </ScrollView>
@@ -338,6 +350,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
         onClose={() => setIsTodaysDealsVisible(false)}
         onAddToCart={handleAddToCart}
         onToggleFavorite={handleToggleFavorite}
+        onSelectProduct={handleSelectProduct}
       />
 
       {/* Category Stories Viewer */}
@@ -346,6 +359,19 @@ export default function HomeScreen({ onNavigateToAuth }) {
         onClose={() => setIsStoryVisible(false)}
         stories={activeStoryCategory?.stories}
         categoryName={activeStoryCategory?.name}
+      />
+
+      {/* Product Details Modal Screen */}
+      <ProductDetailsScreen
+        visible={isProductDetailsVisible}
+        product={selectedProduct}
+        onClose={() => setIsProductDetailsVisible(false)}
+        onAddToCart={handleAddToCart}
+        onToggleFavorite={handleToggleFavorite}
+        onBuyNow={(item) => {
+          setIsProductDetailsVisible(false);
+          setIsCartModalVisible(true);
+        }}
       />
     </View>
   );

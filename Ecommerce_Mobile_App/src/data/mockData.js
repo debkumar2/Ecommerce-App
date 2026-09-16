@@ -533,7 +533,13 @@ export const newArrivalsData = [
     type: 'clothing',
     badgeColor: '#10B981',
     badgeText: 'NEW',
-    imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=80',
+      'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&q=80',
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80',
+      'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=800&q=80',
+    ],
   },
   {
     id: 'na-2',
@@ -546,7 +552,13 @@ export const newArrivalsData = [
     type: 'shoes',
     badgeColor: '#10B981',
     badgeText: 'NEW',
-    imageUrl: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=500&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=800&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=800&q=80',
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80',
+      'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800&q=80',
+      'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&q=80',
+    ],
   },
   {
     id: 'na-3',
@@ -559,7 +571,13 @@ export const newArrivalsData = [
     type: 'watch',
     badgeColor: '#10B981',
     badgeText: 'NEW',
-    imageUrl: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&q=80',
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&q=80',
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80',
+    ],
   },
   {
     id: 'na-4',
@@ -572,6 +590,12 @@ export const newArrivalsData = [
     type: 'clothing',
     badgeColor: '#10B981',
     badgeText: 'NEW',
-    imageUrl: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=500&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=800&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=800&q=80',
+      'https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=800&q=80',
+      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&q=80',
+      'https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?w=800&q=80',
+    ],
   },
 ];

@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react-native';
 import ProductCard from './ProductCard';
 import { colors } from '../theme/colors';
 
-export default function NewArrivalsSection({ data, onAddToCart, onToggleFavorite, onSeeAll }) {
+export default function NewArrivalsSection({ data, onAddToCart, onToggleFavorite, onSeeAll, onSelectProduct }) {
   if (!data || data.length === 0) return null;
 
   return (
@@ -31,6 +31,7 @@ export default function NewArrivalsSection({ data, onAddToCart, onToggleFavorite
             item={item}
             onAddToCart={onAddToCart}
             onToggleFavorite={onToggleFavorite}
+            onPress={onSelectProduct}
           />
         ))}
       </ScrollView>
