@@ -6,6 +6,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import ErrorBoundary from './src/components/ErrorBoundary';
 import { colors } from './src/theme/colors';
 
 const DEFAULT_WIDTH = Math.min(Dimensions.get('window').width, 500);
@@ -50,49 +51,51 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
-        <StatusBar style="dark" backgroundColor={colors.background} translucent={false} />
+      <ErrorBoundary>
+        <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
+          <StatusBar style="dark" backgroundColor={colors.background} translucent={false} />
 
-        {/* Screen Frame Container */}
-        <View style={styles.screenWrapper} onLayout={onLayoutContainer}>
-          <Animated.View
-            style={[
-              styles.sliderTrack,
-              {
-                width: containerWidth * 4,
-                transform: [{ translateX }],
-              },
-            ]}
-          >
-            {/* Slide 0: Forgot Password Page */}
-            <View style={[styles.slidePage, { width: containerWidth }]}>
-              <ForgotPasswordScreen onNavigateToLogin={() => navigateTo('login')} />
-            </View>
+          {/* Screen Frame Container */}
+          <View style={styles.screenWrapper} onLayout={onLayoutContainer}>
+            <Animated.View
+              style={[
+                styles.sliderTrack,
+                {
+                  width: containerWidth * 4,
+                  transform: [{ translateX }],
+                },
+              ]}
+            >
+              {/* Slide 0: Forgot Password Page */}
+              <View style={[styles.slidePage, { width: containerWidth }]}>
+                <ForgotPasswordScreen onNavigateToLogin={() => navigateTo('login')} />
+              </View>
 
-            {/* Slide 1: Login Page */}
-            <View style={[styles.slidePage, { width: containerWidth }]}>
-              <LoginScreen
-                onNavigateToSignup={() => navigateTo('signup')}
-                onNavigateToForgotPassword={() => navigateTo('forgot')}
-                onNavigateToHome={() => navigateTo('home')}
-              />
-            </View>
+              {/* Slide 1: Login Page */}
+              <View style={[styles.slidePage, { width: containerWidth }]}>
+                <LoginScreen
+                  onNavigateToSignup={() => navigateTo('signup')}
+                  onNavigateToForgotPassword={() => navigateTo('forgot')}
+                  onNavigateToHome={() => navigateTo('home')}
+                />
+              </View>
 
-            {/* Slide 2: Create Account Page */}
-            <View style={[styles.slidePage, { width: containerWidth }]}>
-              <SignupScreen
-                onNavigateToLogin={() => navigateTo('login')}
-                onNavigateToHome={() => navigateTo('home')}
-              />
-            </View>
+              {/* Slide 2: Create Account Page */}
+              <View style={[styles.slidePage, { width: containerWidth }]}>
+                <SignupScreen
+                  onNavigateToLogin={() => navigateTo('login')}
+                  onNavigateToHome={() => navigateTo('home')}
+                />
+              </View>
 
-            {/* Slide 3: E-Commerce Home Page */}
-            <View style={[styles.slidePage, { width: containerWidth }]}>
-              <HomeScreen onNavigateToAuth={() => navigateTo('login')} />
-            </View>
-          </Animated.View>
-        </View>
-      </SafeAreaView>
+              {/* Slide 3: E-Commerce Home Page */}
+              <View style={[styles.slidePage, { width: containerWidth }]}>
+                <HomeScreen onNavigateToAuth={() => navigateTo('login')} />
+              </View>
+            </Animated.View>
+          </View>
+        </SafeAreaView>
+      </ErrorBoundary>
     </SafeAreaProvider>
   );
 }

@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { 
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import {
   Camera, Crown, Package, Heart, Ticket, Star,
   User, MapPin, CreditCard, Bell, ShieldCheck, ChevronRight,
   HeadphonesIcon, FileText, Info, LogOut
 } from 'lucide-react-native';
 import { colors } from '../theme/colors';
+import AppImage from '../components/AppImage';
+import { normalizeUser } from '../types';
 
 const ProfileMenuItem = ({ icon: Icon, title, subtitle, onPress }) => (
   <TouchableOpacity style={styles.menuItem} onPress={onPress} activeOpacity={0.7}>
@@ -20,30 +22,51 @@ const ProfileMenuItem = ({ icon: Icon, title, subtitle, onPress }) => (
   </TouchableOpacity>
 );
 
-export default function ProfileContent() {
+export default function ProfileContent({
+  userProfile = {
+    fullName: 'Supain Nandy',
+    email: 'supain.nandy@gmail.com',
+    phone: '+91 98765 43210',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80',
+    quote: 'Good Shoppers Make a Better World',
+  },
+  onEditProfilePress,
+  onDeliveryAddressesPress,
+  onAboutPress,
+  onTermsPress,
+  onHelpCenterPress,
+  onPrivacySecurityPress,
+}) {
+  const safeUser = normalizeUser(userProfile);
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-      
+
       {/* Profile Info Card */}
       <View style={styles.profileCard}>
         <View style={styles.profileInfoRow}>
           {/* Avatar Area */}
           <View style={styles.avatarContainer}>
-            <Image 
-              source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80' }} 
-              style={styles.avatar} 
+            <AppImage
+              source={{ uri: safeUser.avatar }}
+              style={styles.avatar}
+              fallbackIcon={User}
             />
-            <TouchableOpacity style={styles.cameraButton} activeOpacity={0.8}>
+            <TouchableOpacity
+              style={styles.cameraButton}
+              activeOpacity={0.8}
+              onPress={onEditProfilePress}
+            >
               <Camera size={14} color={colors.white} />
             </TouchableOpacity>
           </View>
-          
+
           {/* User Details */}
           <View style={styles.userDetails}>
-            <Text style={styles.userName}>Supain Nandy</Text>
-            <Text style={styles.userInfoText}>supain.nandy@gmail.com</Text>
-            <Text style={styles.userInfoText}>+91 98765 43210</Text>
-            
+            <Text style={styles.userName}>{safeUser.fullName}</Text>
+            <Text style={styles.userInfoText}>{safeUser.email}</Text>
+            <Text style={styles.userInfoText}>{safeUser.phone}</Text>
+
             <View style={styles.memberBadge}>
               <Crown size={12} color="#D97706" fill="#D97706" style={{ marginRight: 4 }} />
               <Text style={styles.memberBadgeText}>Member Since Mar 2024</Text>
@@ -53,7 +76,7 @@ export default function ProfileContent() {
 
         {/* Decorative Quote */}
         <View style={styles.quoteContainer}>
-          <Text style={styles.quoteText}>Good Shoppers Make a Better World</Text>
+          <Text style={styles.quoteText}>{safeUser.quote}</Text>
           <View style={styles.quoteUnderline} />
           <View style={styles.quoteUnderline2} />
         </View>
@@ -68,9 +91,9 @@ export default function ProfileContent() {
           <Text style={styles.statValue}>12</Text>
           <Text style={styles.statLabel}>Orders</Text>
         </View>
-        
+
         <View style={styles.statDivider} />
-        
+
         <View style={styles.statItem}>
           <View style={[styles.statIconBg, { backgroundColor: '#FCE7F3' }]}>
             <Heart size={20} color="#BE185D" />
@@ -103,56 +126,62 @@ export default function ProfileContent() {
       {/* My Account Section */}
       <Text style={styles.sectionTitle}>My Account</Text>
       <View style={styles.sectionCard}>
-        <ProfileMenuItem 
-          icon={User} 
-          title="Edit Profile" 
-          subtitle="Update your personal information" 
+        <ProfileMenuItem
+          icon={User}
+          title="Edit Profile"
+          subtitle="Update your personal information"
+          onPress={onEditProfilePress}
         />
         <View style={styles.menuDivider} />
-        <ProfileMenuItem 
-          icon={MapPin} 
-          title="Delivery Addresses" 
-          subtitle="Manage your saved addresses" 
+        <ProfileMenuItem
+          icon={MapPin}
+          title="Delivery Addresses"
+          subtitle="Manage your saved addresses"
+          onPress={onDeliveryAddressesPress}
         />
         <View style={styles.menuDivider} />
-        <ProfileMenuItem 
-          icon={CreditCard} 
-          title="Payment Methods" 
-          subtitle="Manage your cards and wallets" 
+        <ProfileMenuItem
+          icon={CreditCard}
+          title="Payment Methods"
+          subtitle="Manage your cards and wallets"
         />
         <View style={styles.menuDivider} />
-        <ProfileMenuItem 
-          icon={Bell} 
-          title="Notifications" 
-          subtitle="Manage your notification preferences" 
+        <ProfileMenuItem
+          icon={Bell}
+          title="Notifications"
+          subtitle="Manage your notification preferences"
         />
         <View style={styles.menuDivider} />
-        <ProfileMenuItem 
-          icon={ShieldCheck} 
-          title="Privacy & Security" 
-          subtitle="Manage your account security" 
+        <ProfileMenuItem
+          icon={ShieldCheck}
+          title="Privacy & Security"
+          subtitle="Manage your account security"
+          onPress={onPrivacySecurityPress}
         />
       </View>
 
       {/* Help & Support Section */}
       <Text style={styles.sectionTitle}>Help & Support</Text>
       <View style={styles.sectionCard}>
-        <ProfileMenuItem 
-          icon={HeadphonesIcon} 
-          title="Help Center" 
-          subtitle="Get help with your orders" 
+        <ProfileMenuItem
+          icon={HeadphonesIcon}
+          title="Help Center"
+          subtitle="Get help with your orders"
+          onPress={onHelpCenterPress}
         />
         <View style={styles.menuDivider} />
-        <ProfileMenuItem 
-          icon={FileText} 
-          title="Terms & Conditions" 
-          subtitle="Read our terms and policies" 
+        <ProfileMenuItem
+          icon={FileText}
+          title="Terms & Conditions"
+          subtitle="Read our terms and policies"
+          onPress={onTermsPress}
         />
         <View style={styles.menuDivider} />
-        <ProfileMenuItem 
-          icon={Info} 
-          title="About ShopKart" 
-          subtitle="App version 1.0.0" 
+        <ProfileMenuItem
+          icon={Info}
+          title="About ShopEase"
+          subtitle="App version 1.0.0"
+          onPress={onAboutPress}
         />
       </View>
 

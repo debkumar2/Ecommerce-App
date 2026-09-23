@@ -30,6 +30,12 @@ import CategoriesContent from './CategoriesContent';
 import OrdersContent from './OrdersContent';
 import WishlistContent from './WishlistContent';
 import ProfileContent from './ProfileContent';
+import EditProfileScreen from './EditProfileScreen';
+import DeliveryAddressesScreen from './DeliveryAddressesScreen';
+import AboutShopEaseScreen from './AboutShopEaseScreen';
+import TermsScreen from './TermsScreen';
+import HelpCenterScreen from './HelpCenterScreen';
+import PrivacySecurityScreen from './PrivacySecurityScreen';
 import CartScreen from './CartScreen';
 import TodaysDealsScreen from './TodaysDealsScreen';
 import StoryViewerScreen from './StoryViewerScreen';
@@ -57,6 +63,22 @@ export default function HomeScreen({ onNavigateToAuth }) {
   const [isAddToCartSuccessVisible, setIsAddToCartSuccessVisible] = useState(false);
   const [completedOrderData, setCompletedOrderData] = useState(null);
   const [isOrderSuccessVisible, setIsOrderSuccessVisible] = useState(false);
+  const [isEditProfileVisible, setIsEditProfileVisible] = useState(false);
+  const [isDeliveryAddressesVisible, setIsDeliveryAddressesVisible] = useState(false);
+  const [isAboutVisible, setIsAboutVisible] = useState(false);
+  const [isTermsVisible, setIsTermsVisible] = useState(false);
+  const [isHelpCenterVisible, setIsHelpCenterVisible] = useState(false);
+  const [isPrivacySecurityVisible, setIsPrivacySecurityVisible] = useState(false);
+  const [userProfile, setUserProfile] = useState({
+    fullName: 'Supain Nandy',
+    email: 'supain.nandy@gmail.com',
+    phone: '+91 98765 43210',
+    gender: 'Male',
+    dob: '1995-08-15',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80',
+    quote: 'Good Shoppers Make a Better World',
+    address: '123 Park Avenue, Salt Lake, Kolkata, 700091',
+  });
   const [contentWidth, setContentWidth] = useState(Dimensions.get('window').width);
 
   const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -374,7 +396,15 @@ export default function HomeScreen({ onNavigateToAuth }) {
 
           {/* 4: Profile Page */}
           <View style={[styles.slidePage, { width: contentWidth }]}>
-            <ProfileContent />
+            <ProfileContent
+              userProfile={userProfile}
+              onEditProfilePress={() => setIsEditProfileVisible(true)}
+              onDeliveryAddressesPress={() => setIsDeliveryAddressesVisible(true)}
+              onAboutPress={() => setIsAboutVisible(true)}
+              onTermsPress={() => setIsTermsVisible(true)}
+              onHelpCenterPress={() => setIsHelpCenterVisible(true)}
+              onPrivacySecurityPress={() => setIsPrivacySecurityVisible(true)}
+            />
           </View>
         </Animated.View>
       </View>
@@ -450,6 +480,48 @@ export default function HomeScreen({ onNavigateToAuth }) {
           setIsOrderSuccessVisible(false);
           handleBottomTabPress('home');
         }}
+      />
+
+      {/* Edit Profile Full Screen Modal */}
+      <EditProfileScreen
+        visible={isEditProfileVisible}
+        onClose={() => setIsEditProfileVisible(false)}
+        initialProfile={userProfile}
+        onSaveProfile={(updatedProfile) => setUserProfile(updatedProfile)}
+        onManageAddressesPress={() => {
+          setIsEditProfileVisible(false);
+          setIsDeliveryAddressesVisible(true);
+        }}
+      />
+
+      {/* Delivery Addresses Management Modal */}
+      <DeliveryAddressesScreen
+        visible={isDeliveryAddressesVisible}
+        onClose={() => setIsDeliveryAddressesVisible(false)}
+      />
+
+      {/* About ShopEase Screen Modal */}
+      <AboutShopEaseScreen
+        visible={isAboutVisible}
+        onClose={() => setIsAboutVisible(false)}
+      />
+
+      {/* Terms & Conditions Screen Modal */}
+      <TermsScreen
+        visible={isTermsVisible}
+        onClose={() => setIsTermsVisible(false)}
+      />
+
+      {/* Help Center Screen Modal */}
+      <HelpCenterScreen
+        visible={isHelpCenterVisible}
+        onClose={() => setIsHelpCenterVisible(false)}
+      />
+
+      {/* Privacy & Security Screen Modal */}
+      <PrivacySecurityScreen
+        visible={isPrivacySecurityVisible}
+        onClose={() => setIsPrivacySecurityVisible(false)}
       />
     </View>
   );

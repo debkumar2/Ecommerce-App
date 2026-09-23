@@ -1,21 +1,32 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { Heart, Star, ShoppingBag, Headphones, Footprints, Watch, Smartphone, Sparkles } from 'lucide-react-native';
 import { colors } from '../theme/colors';
+import AppImage from './AppImage';
+import { normalizeProduct } from '../types';
+import { useActionLock } from '../hooks/useActionLock';
 
 export default function ProductCard({ item, onAddToCart, onToggleFavorite, onPress, containerStyle }) {
+  const safeItem = normalizeProduct(item);
   const [isFavorite, setIsFavorite] = useState(false);
+  const { isProcessing, executeAction } = useActionLock(350);
 
   const handleFavoritePress = () => {
     setIsFavorite(!isFavorite);
-    if (onToggleFavorite) onToggleFavorite(item, !isFavorite);
+    if (onToggleFavorite) onToggleFavorite(safeItem, !isFavorite);
+  };
+
+  const handleAddToCartClick = () => {
+    if (onAddToCart) {
+      executeAction(() => onAddToCart(safeItem));
+    }
   };
 
   const renderProductIllustration = () => {
-    if (item.imageUrl) {
+    if (safeItem.imageUrl) {
       return (
-        <Image 
-          source={{ uri: item.imageUrl }} 
+        <AppImage 
+          source={{ uri: safeItem.imageUrl }} 
           style={styles.productImage} 
           resizeMode="cover" 
         />
@@ -24,7 +35,7 @@ export default function ProductCard({ item, onAddToCart, onToggleFavorite, onPre
     
     // Fallback if no image URL
     const iconProps = { size: 48, color: '#374151' };
-    switch (item.type) {
+    switch (safeItem.type) {
       case 'headphones':
         return <Headphones {...iconProps} color="#1F2937" />;
       case 'shoes':
@@ -45,7 +56,7 @@ export default function ProductCard({ item, onAddToCart, onToggleFavorite, onPre
   return (
     <TouchableOpacity
       style={[styles.card, containerStyle]}
-      onPress={() => onPress && onPress(item)}
+      onPress={() => onPress && onPress(safeItem)}
       activeOpacity={0.9}
     >
       {/* Image Container with Top Row overlaid */}
@@ -53,9 +64,9 @@ export default function ProductCard({ item, onAddToCart, onToggleFavorite, onPre
         {renderProductIllustration()}
         
         <View style={styles.topRowOverlay}>
-          {item.discount ? (
-            <View style={[styles.discountBadge, item.badgeColor ? { backgroundColor: item.badgeColor } : null]}>
-              <Text style={styles.discountText}>{item.discount}</Text>
+          {safeItem.discount ? (
+            <View style={[styles.discountBadge, safeItem.badgeColor ? { backgroundColor: safeItem.badgeColor } : null]}>
+              <Text style={styles.discountText}>{safeItem.discount}</Text>
             </View>
           ) : <View />}
 
@@ -76,31 +87,36 @@ export default function ProductCard({ item, onAddToCart, onToggleFavorite, onPre
       <View style={styles.contentContainer}>
         {/* Product Details */}
         <Text style={styles.productName} numberOfLines={1}>
-          {item.name}
+          {safeItem.name}
         </Text>
 
         {/* Price Row */}
         <View style={styles.priceRow}>
-          <Text style={styles.price}>₹{item.price.toLocaleString('en-IN')}</Text>
-          {item.originalPrice ? (
-            <Text style={styles.originalPrice}>₹{item.originalPrice.toLocaleString('en-IN')}</Text>
+          <Text style={styles.price}>₹{safeItem.price.toLocaleString('en-IN')}</Text>
+          {safeItem.originalPrice ? (
+            <Text style={styles.originalPrice}>₹{safeItem.originalPrice.toLocaleString('en-IN')}</Text>
           ) : null}
         </View>
 
         {/* Rating Row */}
         <View style={styles.ratingRow}>
           <Star size={13} color="#F59E0B" fill="#F59E0B" />
-          <Text style={styles.ratingText}>{item.rating}</Text>
-          <Text style={styles.reviewsText}>({item.reviewsCount})</Text>
+          <Text style={styles.ratingText}>{safeItem.rating}</Text>
+          <Text style={styles.reviewsText}>({safeItem.reviewsCount})</Text>
         </View>
 
-        {/* Add to Cart Button */}
+        {/* Add to Cart Button with double tap lock */}
         <TouchableOpacity
-          style={styles.addToCartButton}
-          onPress={() => onAddToCart(item)}
+          style={[styles.addToCartButton, isProcessing && styles.addToCartDisabled]}
+          onPress={handleAddToCartClick}
+          disabled={isProcessing}
           activeOpacity={0.8}
         >
-          <Text style={styles.addToCartText}>Add to Cart</Text>
+          {isProcessing ? (
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          ) : (
+            <Text style={styles.addToCartText}>Add to Cart</Text>
+          )}
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -216,6 +232,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+  },
+  addToCartDisabled: {
+    backgroundColor: colors.primaryDark,
+    opacity: 0.8,
   },
   addToCartText: {
     color: colors.white,
