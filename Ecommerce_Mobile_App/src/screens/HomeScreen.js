@@ -26,6 +26,7 @@ import DealOfTheDaySection from '../components/DealOfTheDaySection';
 import ShopTheLookSection from '../components/ShopTheLookSection';
 import CollectionsGrid from '../components/CollectionsGrid';
 import BottomNavBar from '../components/BottomNavBar';
+import SidebarDrawer from '../components/SidebarDrawer';
 import CategoriesContent from './CategoriesContent';
 import OrdersContent from './OrdersContent';
 import WishlistContent from './WishlistContent';
@@ -36,6 +37,8 @@ import AboutShopEaseScreen from './AboutShopEaseScreen';
 import TermsScreen from './TermsScreen';
 import HelpCenterScreen from './HelpCenterScreen';
 import PrivacySecurityScreen from './PrivacySecurityScreen';
+import NotificationsScreen from './NotificationsScreen';
+import PaymentMethodsScreen from './PaymentMethodsScreen';
 import CartScreen from './CartScreen';
 import TodaysDealsScreen from './TodaysDealsScreen';
 import StoryViewerScreen from './StoryViewerScreen';
@@ -69,6 +72,9 @@ export default function HomeScreen({ onNavigateToAuth }) {
   const [isTermsVisible, setIsTermsVisible] = useState(false);
   const [isHelpCenterVisible, setIsHelpCenterVisible] = useState(false);
   const [isPrivacySecurityVisible, setIsPrivacySecurityVisible] = useState(false);
+  const [isNotificationsVisible, setIsNotificationsVisible] = useState(false);
+  const [isPaymentMethodsVisible, setIsPaymentMethodsVisible] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userProfile, setUserProfile] = useState({
     fullName: 'Supain Nandy',
     email: 'supain.nandy@gmail.com',
@@ -177,7 +183,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
       <HomeHeader
         wishlistCount={wishlistCount}
         cartCount={totalCartCount}
-        onMenuPress={() => Alert.alert('Menu', 'Opening side navigation drawer...')}
+        onMenuPress={() => setIsSidebarOpen(true)}
         onWishlistPress={() => handleBottomTabPress('wishlist')}
         onCartPress={() => setIsCartModalVisible(true)}
       />
@@ -404,6 +410,8 @@ export default function HomeScreen({ onNavigateToAuth }) {
               onTermsPress={() => setIsTermsVisible(true)}
               onHelpCenterPress={() => setIsHelpCenterVisible(true)}
               onPrivacySecurityPress={() => setIsPrivacySecurityVisible(true)}
+              onNotificationsPress={() => setIsNotificationsVisible(true)}
+              onPaymentMethodsPress={() => setIsPaymentMethodsVisible(true)}
             />
           </View>
         </Animated.View>
@@ -522,6 +530,33 @@ export default function HomeScreen({ onNavigateToAuth }) {
       <PrivacySecurityScreen
         visible={isPrivacySecurityVisible}
         onClose={() => setIsPrivacySecurityVisible(false)}
+      />
+
+      {/* Notifications Screen Modal */}
+      <NotificationsScreen
+        visible={isNotificationsVisible}
+        onClose={() => setIsNotificationsVisible(false)}
+      />
+
+      {/* Payment Methods Screen Modal */}
+      <PaymentMethodsScreen
+        visible={isPaymentMethodsVisible}
+        onClose={() => setIsPaymentMethodsVisible(false)}
+      />
+
+      {/* Sidebar Navigation Drawer Modal */}
+      <SidebarDrawer
+        visible={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        userProfile={userProfile}
+        onNavigateTab={(tabId) => handleBottomTabPress(tabId)}
+        onOpenDeals={() => setIsTodaysDealsVisible(true)}
+        onOpenAddresses={() => setIsDeliveryAddressesVisible(true)}
+        onOpenPayments={() => setIsPaymentMethodsVisible(true)}
+        onOpenNotifications={() => setIsNotificationsVisible(true)}
+        onOpenPrivacy={() => setIsPrivacySecurityVisible(true)}
+        onOpenHelp={() => setIsHelpCenterVisible(true)}
+        onOpenAbout={() => setIsAboutVisible(true)}
       />
     </View>
   );

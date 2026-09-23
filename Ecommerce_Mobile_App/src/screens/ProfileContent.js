@@ -36,6 +36,8 @@ export default function ProfileContent({
   onTermsPress,
   onHelpCenterPress,
   onPrivacySecurityPress,
+  onNotificationsPress,
+  onPaymentMethodsPress,
 }) {
   const safeUser = normalizeUser(userProfile);
 
@@ -144,12 +146,14 @@ export default function ProfileContent({
           icon={CreditCard}
           title="Payment Methods"
           subtitle="Manage your cards and wallets"
+          onPress={onPaymentMethodsPress}
         />
         <View style={styles.menuDivider} />
         <ProfileMenuItem
           icon={Bell}
           title="Notifications"
           subtitle="Manage your notification preferences"
+          onPress={onNotificationsPress}
         />
         <View style={styles.menuDivider} />
         <ProfileMenuItem
