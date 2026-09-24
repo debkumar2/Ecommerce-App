@@ -49,14 +49,40 @@ export default function SignupScreen({ onNavigateToLogin, onNavigateToHome }) {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      if (onNavigateToHome) {
-        onNavigateToHome();
-      } else {
-        onNavigateToLogin();
-      }
-    }, 1200);
+
+    // I have updated this to your actual computer's Wi-Fi IP address so it works on your physical phone!
+    const API_URL = 'http://192.168.31.64:5000/api/users/register';
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: fullName,
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        if (data.token) {
+          Alert.alert('Success', 'Account created successfully!');
+          if (onNavigateToHome) {
+            onNavigateToHome();
+          } else {
+            onNavigateToLogin();
+          }
+        } else {
+          Alert.alert('Registration Failed', data.message || 'Unknown error occurred.');
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        Alert.alert('Network Error', 'Ensure backend is running and IP address is correct.');
+        console.error(error);
+      });
   };
 
   const handleTermsPress = () => {

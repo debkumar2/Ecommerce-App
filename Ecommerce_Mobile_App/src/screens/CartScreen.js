@@ -22,29 +22,49 @@ export default function CartScreen({ visible, onClose, onCheckoutSuccess, cartIt
   const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [isPromoApplied, setIsPromoApplied] = useState(false);
   const [isAddressModalVisible, setIsAddressModalVisible] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState(null);
 
   const cartItems = propCartItems || localCart;
   const updateCartItems = setPropCartItems || setLocalCart;
 
-  const handleQuantityChange = (id, delta) => {
+  const handleQuantityChange = (id, delta, productId) => {
+    const item = cartItems.find(i => i.id === id);
+    if (!item) return;
+
+    const newQty = item.quantity + delta;
+
+    if (newQty <= 0) {
+      setItemToRemove({ id, name: item.name, productId: productId || item.productId });
+      return;
+    }
+
+    // Optimistic UI update
     updateCartItems((prevItems) =>
-      prevItems
-        .map((item) => {
-          if (item.id === id) {
-            const newQty = item.quantity + delta;
-            return newQty > 0 ? { ...item, quantity: newQty } : null;
-          }
-          return item;
-        })
-        .filter(Boolean)
+      prevItems.map((i) => (i.id === id ? { ...i, quantity: newQty } : i))
     );
+
+    // Sync with backend
+    fetch('http://192.168.31.64:5000/api/cart/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: 1, productId: Number(productId || item.productId), quantity: newQty })
+    }).catch(err => console.error('Failed to update quantity:', err));
   };
 
-  const handleRemoveItem = (id, name) => {
+  const confirmRemoveItem = () => {
+    if (!itemToRemove) return;
+
+    const { id, productId } = itemToRemove;
+    
+    // Sync with backend
+    fetch('http://192.168.31.64:5000/api/cart/remove', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: 1, productId: Number(productId) })
+    }).catch(err => console.error('Failed to remove item:', err));
+
     updateCartItems((prev) => prev.filter((item) => item.id !== id));
-    const msg = `Removed "${name}" from cart.`;
-    if (Platform.OS === 'web') alert(msg);
-    else Alert.alert('Cart Updated', msg);
+    setItemToRemove(null);
   };
 
   const handleApplyPromo = () => {
@@ -152,7 +172,7 @@ export default function CartScreen({ visible, onClose, onCheckoutSuccess, cartIt
                           {item.name}
                         </Text>
                         <TouchableOpacity
-                          onPress={() => handleRemoveItem(item.id, item.name)}
+                          onPress={() => setItemToRemove({ id: item.id, name: item.name, productId: item.productId })}
                           activeOpacity={0.7}
                           style={styles.deleteButton}
                         >
@@ -177,7 +197,7 @@ export default function CartScreen({ visible, onClose, onCheckoutSuccess, cartIt
                         <View style={styles.quantityContainer}>
                           <TouchableOpacity
                             style={styles.quantityButton}
-                            onPress={() => handleQuantityChange(item.id, -1)}
+                            onPress={() => handleQuantityChange(item.id, -1, item.productId)}
                             activeOpacity={0.7}
                           >
                             <Minus size={14} color={colors.textPrimary} />
@@ -185,7 +205,7 @@ export default function CartScreen({ visible, onClose, onCheckoutSuccess, cartIt
                           <Text style={styles.quantityText}>{item.quantity}</Text>
                           <TouchableOpacity
                             style={styles.quantityButton}
-                            onPress={() => handleQuantityChange(item.id, 1)}
+                            onPress={() => handleQuantityChange(item.id, 1, item.productId)}
                             activeOpacity={0.7}
                           >
                             <Plus size={14} color={colors.textPrimary} />
@@ -304,6 +324,39 @@ export default function CartScreen({ visible, onClose, onCheckoutSuccess, cartIt
         cartItems={cartItems}
         onOrderPlaced={handleOrderPlaced}
       />
+
+      {/* Beautiful Remove Confirmation Modal */}
+      <Modal visible={!!itemToRemove} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.warningIconContainer}>
+              <Trash2 size={32} color="#EF4444" />
+            </View>
+            <Text style={styles.modalTitle}>Remove Item?</Text>
+            <Text style={styles.modalText}>
+              Are you sure you want to remove <Text style={{fontWeight: '700'}}>{itemToRemove?.name}</Text> from your cart?
+            </Text>
+            
+            <View style={styles.modalActionsRow}>
+              <TouchableOpacity
+                style={styles.cancelModalBtn}
+                onPress={() => setItemToRemove(null)}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.cancelModalBtnText}>Cancel</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={styles.confirmModalBtn}
+                onPress={confirmRemoveItem}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.confirmModalBtnText}>Yes, Remove</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </Modal>
   );
 }
@@ -643,6 +696,79 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   shopNowButtonText: {
+    color: colors.white,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: colors.white,
+    borderRadius: 24,
+    padding: 24,
+    width: '100%',
+    maxWidth: 340,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  warningIconContainer: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#FEF2F2',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: colors.textPrimary,
+    marginBottom: 8,
+  },
+  modalText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 24,
+  },
+  modalActionsRow: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  cancelModalBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 12,
+    backgroundColor: '#F1F5F9',
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  cancelModalBtnText: {
+    color: colors.textPrimary,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  confirmModalBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 12,
+    backgroundColor: '#EF4444',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  confirmModalBtnText: {
     color: colors.white,
     fontSize: 14,
     fontWeight: '700',

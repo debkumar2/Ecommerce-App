@@ -51,15 +51,41 @@ export default function ProductDetailsScreen({
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'specs' | 'reviews'
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(SCREEN_WIDTH);
+  const [fullProduct, setFullProduct] = useState(null);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+
+  React.useEffect(() => {
+    if (product?.id && !isNaN(product.id)) {
+      setLoadingDetails(true);
+      fetch(`http://192.168.31.64:5000/api/products/${product.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setFullProduct(data);
+          setLoadingDetails(false);
+        })
+        .catch(err => {
+          console.error('Failed to fetch full product details:', err);
+          setLoadingDetails(false);
+        });
+    } else {
+      setFullProduct(null);
+    }
+  }, [product?.id]);
+
+  const displayProduct = fullProduct ? {
+    ...product,
+    description: fullProduct.description,
+    type: fullProduct.category ? fullProduct.category.name : product.type
+  } : product;
 
   const imageScrollViewRef = useRef(null);
 
-  if (!product) return null;
+  if (!displayProduct) return null;
 
-  const galleryImages = (product.images && product.images.length > 0)
-    ? product.images
+  const galleryImages = (displayProduct.images && displayProduct.images.length > 0)
+    ? displayProduct.images
     : [
-        product.imageUrl || 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=80',
+        displayProduct.imageUrl || 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=80',
         'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80',
         'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&q=80',
         'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80',
@@ -89,10 +115,10 @@ export default function ProductDetailsScreen({
   };
 
   const handleShare = () => {
-    const msg = `Check out ${product.name} on ShopEase! Price: ₹${product.price}`;
+    const msg = `Check out ${displayProduct.name} on ShopEase! Price: ₹${displayProduct.price}`;
     if (Platform.OS === 'web') {
       if (navigator.share) {
-        navigator.share({ title: product.name, text: msg, url: window.location.href });
+        navigator.share({ title: displayProduct.name, text: msg, url: window.location.href });
       } else {
         alert(msg);
       }
@@ -103,7 +129,7 @@ export default function ProductDetailsScreen({
 
   const handleAddToCartPress = () => {
     const itemWithVariant = {
-      ...product,
+      ...displayProduct,
       variant: `Size: ${selectedSize} | Color: ${selectedColor.name}`,
     };
     if (onAddToCart) {
@@ -113,7 +139,7 @@ export default function ProductDetailsScreen({
 
   const handleBuyNowPress = () => {
     const itemWithVariant = {
-      ...product,
+      ...displayProduct,
       variant: `Size: ${selectedSize} | Color: ${selectedColor.name}`,
     };
     if (onAddToCart) {
@@ -122,15 +148,15 @@ export default function ProductDetailsScreen({
     if (onBuyNow) {
       onBuyNow(itemWithVariant);
     } else {
-      const msg = `Redirecting to Instant Checkout for ${product.name}!`;
+      const msg = `Redirecting to Instant Checkout for ${displayProduct.name}!`;
       if (Platform.OS === 'web') alert(msg);
       else Alert.alert('Buy Now', msg);
     }
   };
 
-  const originalPrice = product.originalPrice || Math.round(product.price * 1.35);
-  const discountPercent = product.discount || `${Math.round(((originalPrice - product.price) / originalPrice) * 100)}% OFF`;
-  const savingsAmount = originalPrice - product.price;
+  const originalPrice = displayProduct.originalPrice || Math.round(displayProduct.price * 1.35);
+  const discountPercent = displayProduct.discount || `${Math.round(((originalPrice - displayProduct.price) / originalPrice) * 100)}% OFF`;
+  const savingsAmount = originalPrice - displayProduct.price;
 
   return (
     <Modal
@@ -146,7 +172,7 @@ export default function ProductDetailsScreen({
             <ArrowLeft size={22} color={colors.textPrimary} />
           </TouchableOpacity>
           <Text style={styles.headerTitle} numberOfLines={1}>
-            {product.name}
+            {displayProduct.name}
           </Text>
           <View style={styles.headerRightActions}>
             <TouchableOpacity style={styles.iconButton} onPress={handleShare} activeOpacity={0.7}>
@@ -192,13 +218,13 @@ export default function ProductDetailsScreen({
             </ScrollView>
 
             {/* Discount / New Badge Overlay */}
-            {product.badgeText ? (
-              <View style={[styles.badge, product.badgeColor ? { backgroundColor: product.badgeColor } : null]}>
-                <Text style={styles.badgeText}>{product.badgeText}</Text>
+            {displayProduct.badgeText ? (
+              <View style={[styles.badge, displayProduct.badgeColor ? { backgroundColor: displayProduct.badgeColor } : null]}>
+                <Text style={styles.badgeText}>{displayProduct.badgeText}</Text>
               </View>
-            ) : product.discount ? (
+            ) : displayProduct.discount ? (
               <View style={styles.badge}>
-                <Text style={styles.badgeText}>{product.discount}</Text>
+                <Text style={styles.badgeText}>{displayProduct.discount}</Text>
               </View>
             ) : null}
 
@@ -251,15 +277,15 @@ export default function ProductDetailsScreen({
           <View style={styles.detailsCard}>
             {/* Title & Brand */}
             <Text style={styles.brandName}>ShopEase Premium</Text>
-            <Text style={styles.productTitle}>{product.name}</Text>
+            <Text style={styles.productTitle}>{displayProduct.name}</Text>
 
             {/* Rating & Reviews */}
             <View style={styles.ratingRow}>
               <View style={styles.starBadge}>
                 <Star size={14} color="#FFFFFF" fill="#FFFFFF" />
-                <Text style={styles.starRatingText}>{product.rating || '4.8'}</Text>
+                <Text style={styles.starRatingText}>{displayProduct.rating || '4.8'}</Text>
               </View>
-              <Text style={styles.reviewCountText}>({product.reviewsCount || '120'} customer reviews)</Text>
+              <Text style={styles.reviewCountText}>({displayProduct.reviewsCount || '120'} customer reviews)</Text>
               <View style={styles.stockStatus}>
                 <View style={styles.stockDot} />
                 <Text style={styles.stockText}>In Stock</Text>
@@ -269,7 +295,7 @@ export default function ProductDetailsScreen({
             {/* Pricing Card */}
             <View style={styles.priceContainer}>
               <View style={styles.priceRow}>
-                <Text style={styles.currentPrice}>₹{product.price.toLocaleString('en-IN')}</Text>
+                <Text style={styles.currentPrice}>₹{displayProduct.price.toLocaleString('en-IN')}</Text>
                 <Text style={styles.originalPrice}>₹{originalPrice.toLocaleString('en-IN')}</Text>
                 <View style={styles.discountTag}>
                   <Text style={styles.discountTagText}>{discountPercent}</Text>
@@ -392,7 +418,7 @@ export default function ProductDetailsScreen({
             {activeTab === 'overview' && (
               <View style={styles.tabContent}>
                 <Text style={styles.descriptionText}>
-                  Elevate your everyday wardrobe with the {product.name}. Crafted from premium breathable materials, designed for maximum durability, style, and effortless comfort. Perfect for modern lifestyle and versatility.
+                  {displayProduct.description || `Elevate your everyday wardrobe with the ${displayProduct.name}. Crafted from premium breathable materials, designed for maximum durability, style, and effortless comfort. Perfect for modern lifestyle and versatility.`}
                 </Text>
                 <View style={styles.highlightsList}>
                   <View style={styles.highlightRow}>
@@ -415,7 +441,7 @@ export default function ProductDetailsScreen({
               <View style={styles.tabContent}>
                 <View style={styles.specRow}>
                   <Text style={styles.specLabel}>Category:</Text>
-                  <Text style={styles.specValue}>{product.type || 'Apparel / Lifestyle'}</Text>
+                  <Text style={styles.specValue}>{displayProduct.type || 'Apparel / Lifestyle'}</Text>
                 </View>
                 <View style={styles.specRow}>
                   <Text style={styles.specLabel}>Material:</Text>
@@ -435,13 +461,13 @@ export default function ProductDetailsScreen({
             {activeTab === 'reviews' && (
               <View style={styles.tabContent}>
                 <View style={styles.reviewSummaryCard}>
-                  <Text style={styles.reviewBigRating}>{product.rating || '4.8'}</Text>
+                  <Text style={styles.reviewBigRating}>{displayProduct.rating || '4.8'}</Text>
                   <View style={styles.starsRow}>
                     {[1, 2, 3, 4, 5].map((s) => (
                       <Star key={s} size={16} color="#F59E0B" fill="#F59E0B" />
                     ))}
                   </View>
-                  <Text style={styles.reviewSummaryText}>Based on {product.reviewsCount || '120'} customer reviews</Text>
+                  <Text style={styles.reviewSummaryText}>Based on {displayProduct.reviewsCount || '120'} customer reviews</Text>
                 </View>
 
                 {/* Sample Review item */}

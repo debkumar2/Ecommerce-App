@@ -8,7 +8,9 @@ import {
   Alert,
   Platform,
   KeyboardAvoidingView,
+  Modal,
 } from 'react-native';
+import { Check } from 'lucide-react-native';
 import BrandHeader from '../components/BrandHeader';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
@@ -17,9 +19,10 @@ import { TopBackgroundBlob, LoginBottomArt } from '../components/BackgroundArt';
 import { colors } from '../theme/colors';
 
 export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPassword, onNavigateToHome }) {
-  const [email, setEmail] = useState('demo@shopease.com');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -30,12 +33,39 @@ export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPass
     }
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      if (onNavigateToHome) {
-        onNavigateToHome();
-      }
-    }, 800);
+
+    const API_URL = 'http://192.168.31.64:5000/api/users/login';
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        if (data.token) {
+          setShowSuccessModal(true);
+          setTimeout(() => {
+            setShowSuccessModal(false);
+            if (onNavigateToHome) {
+              onNavigateToHome();
+            }
+          }, 1500);
+        } else {
+          Alert.alert('Login Failed', data.message || 'Invalid email or password');
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        Alert.alert('Network Error', 'Ensure backend is running and IP address is correct.');
+        console.error(error);
+      });
   };
 
   const handleForgotPassword = () => {
@@ -140,6 +170,19 @@ export default function LoginScreen({ onNavigateToSignup, onNavigateToForgotPass
           <LoginBottomArt />
         </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* Beautiful Success Modal */}
+      <Modal visible={showSuccessModal} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.successIconContainer}>
+              <Check size={40} color={colors.white} strokeWidth={3} />
+            </View>
+            <Text style={styles.modalTitle}>Login Successful!</Text>
+            <Text style={styles.modalText}>Welcome back to ShopEase. Preparing your personalized experience...</Text>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -226,5 +269,50 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.primary,
     fontWeight: '700',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: colors.white,
+    padding: 30,
+    borderRadius: 24,
+    alignItems: 'center',
+    width: '85%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  successIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#10B981', // Beautiful vibrant green
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    shadowColor: '#10B981',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: colors.textPrimary,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize: 15,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 22,
   },
 });

@@ -1,32 +1,35 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { ArrowRight } from 'lucide-react-native';
-import { colors } from '../theme/colors';
 
 export default function CategoryGridCard({ item, onPress }) {
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: item.color }]}
+      style={styles.card}
       onPress={onPress}
-      activeOpacity={0.8}
+      activeOpacity={0.85}
     >
+      {/* Top Image Section */}
+      <View style={styles.imageContainer}>
+        <Image 
+          source={{ uri: item.imageUrl }} 
+          style={styles.image}
+          resizeMode="cover"
+        />
+        
+        {/* Floating Icon Badge on Image */}
+        <View style={[styles.iconBadge, { backgroundColor: item.color }]}>
+          <ArrowRight size={14} color={item.iconColor} />
+        </View>
+      </View>
+
+      {/* Bottom Text Section */}
       <View style={styles.textContainer}>
-        <Text style={styles.title} numberOfLines={2}>
+        <Text style={styles.title} numberOfLines={1}>
           {item.name}
         </Text>
         <Text style={styles.itemsCount}>{item.items}</Text>
-        
-        <View style={styles.arrowButtonContainer}>
-          <View style={[styles.arrowButtonBg, { backgroundColor: item.iconColor }]} />
-          <ArrowRight size={16} color={item.iconColor} style={styles.arrowIcon} />
-        </View>
       </View>
-      
-      <Image 
-        source={{ uri: item.imageUrl }} 
-        style={styles.image}
-        resizeMode="contain"
-      />
     </TouchableOpacity>
   );
 }
@@ -34,53 +37,64 @@ export default function CategoryGridCard({ item, onPress }) {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    height: 140,
-    borderRadius: 16,
+    height: 190,
+    borderRadius: 20,
     margin: 8,
     overflow: 'hidden',
+    backgroundColor: '#FFFFFF', // Clean white background for the text area
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: '#F3F4F6',
+  },
+  imageContainer: {
+    width: '100%',
+    height: '65%', // Image takes up 65% of the card
     position: 'relative',
-    padding: 14,
+    backgroundColor: '#F9FAFB',
   },
-  textContainer: {
-    zIndex: 2,
-    flex: 1,
-    width: '60%',
+  image: {
+    width: '100%',
+    height: '100%',
   },
-  title: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: '#1F2937', // Darker black for title
-    marginBottom: 4,
-  },
-  itemsCount: {
-    fontSize: 11,
-    color: '#6B7280', // Neutral grey for items
-    marginBottom: 12,
-  },
-  arrowButtonContainer: {
-    width: 28,
-    height: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 'auto',
-    position: 'relative',
-  },
-  arrowButtonBg: {
+  iconBadge: {
     position: 'absolute',
+    bottom: -14,
+    right: 12,
     width: 28,
     height: 28,
     borderRadius: 14,
-    opacity: 0.2, // Faded background
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    zIndex: 10,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
-  arrowIcon: {
-    zIndex: 1,
+  textContainer: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingTop: 16,
+    paddingBottom: 12,
+    justifyContent: 'center',
   },
-  image: {
-    position: 'absolute',
-    right: -15,
-    bottom: -15,
-    width: 105,
-    height: 105,
-    zIndex: 1,
+  title: {
+    fontSize: 15,
+    fontWeight: '800',
+    color: '#111827', // Very dark grey/black
+    marginBottom: 4,
+    letterSpacing: 0.2,
+  },
+  itemsCount: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#6B7280', // Subtle grey
   },
 });

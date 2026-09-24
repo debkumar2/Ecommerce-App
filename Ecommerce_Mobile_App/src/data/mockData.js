@@ -1,6 +1,6 @@
 export const categoriesData = [
   {
-    id: '1', name: 'Fashion', items: '1,200+ items', color: '#FFF0F0', iconColor: '#EF4444', imageUrl: 'https://img.icons8.com/color/256/dress-front-view.png',
+    id: '1', name: 'Fashion', items: '1,200+ items', color: '#FFF0F0', iconColor: '#EF4444', imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
     stories: [
       { id: 's1', imageUrl: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80', title: 'Summer Collection', subtitle: 'New Arrivals', linkText: 'Shop Now' },
       { id: 's2', imageUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80', title: 'Vibrant Looks', subtitle: 'Stand Out', linkText: 'View Style' },
@@ -8,46 +8,46 @@ export const categoriesData = [
     ]
   },
   {
-    id: '2', name: 'Electronics', items: '850+ items', color: '#F0F9FF', iconColor: '#3B82F6', imageUrl: 'https://img.icons8.com/color/256/laptop--v1.png',
+    id: '2', name: 'Electronics', items: '850+ items', color: '#F0F9FF', iconColor: '#3B82F6', imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
     stories: [
       { id: 's4', imageUrl: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&q=80', title: 'Work From Home', subtitle: 'Setup Guide', linkText: 'Upgrade' },
       { id: 's5', imageUrl: 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=800&q=80', title: 'Latest Gadgets', subtitle: 'Tech Deals', linkText: 'Discover' }
     ]
   },
   {
-    id: '3', name: 'Home & Living', items: '670+ items', color: '#ECFDF5', iconColor: '#10B981', imageUrl: 'https://img.icons8.com/color/256/armchair.png',
+    id: '3', name: 'Home & Living', items: '670+ items', color: '#ECFDF5', iconColor: '#10B981', imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
     stories: [
       { id: 's6', imageUrl: 'https://images.unsplash.com/photo-1618220179428-22790b46a0eb?w=800&q=80', title: 'Minimalist Spaces', subtitle: 'Interior Design', linkText: 'Shop Decor' },
       { id: 's7', imageUrl: 'https://images.unsplash.com/photo-1583847268964-b28ce8f31161?w=800&q=80', title: 'Cozy Corners', subtitle: 'Living Room', linkText: 'Find Your Vibe' }
     ]
   },
   {
-    id: '4', name: 'Beauty & Personal Care', items: '950+ items', color: '#FDF4FF', iconColor: '#EC4899', imageUrl: 'https://img.icons8.com/color/256/perfume-bottle.png',
+    id: '4', name: 'Beauty & Personal Care', items: '950+ items', color: '#FDF4FF', iconColor: '#EC4899', imageUrl: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&q=80',
     stories: [
       { id: 's8', imageUrl: 'https://images.unsplash.com/photo-1596462502278-27bf85033e5a?w=800&q=80', title: 'Skincare Routine', subtitle: 'Glow Up', linkText: 'Shop Products' }
     ]
   },
-  { id: '5', name: 'Sports & Fitness', items: '420+ items', color: '#FFF7ED', iconColor: '#F97316', imageUrl: 'https://img.icons8.com/color/256/dumbbell.png' },
-  { id: '6', name: 'Groceries', items: '1,100+ items', color: '#F0FDF4', iconColor: '#22C55E', imageUrl: 'https://img.icons8.com/color/256/shopping-basket-2.png' },
-  { id: '7', name: 'Toys & Games', items: '540+ items', color: '#F5F3FF', iconColor: '#8B5CF6', imageUrl: 'https://img.icons8.com/color/256/teddy-bear.png' },
-  { id: '8', name: 'Health & Wellness', items: '620+ items', color: '#FEFCE8', iconColor: '#EAB308', imageUrl: 'https://img.icons8.com/color/256/pills.png' },
-  { id: '9', name: 'Mobiles & Accessories', items: '780+ items', color: '#EFF6FF', iconColor: '#3B82F6', imageUrl: 'https://img.icons8.com/color/256/iphone.png' },
-  { id: '10', name: 'Books & Stationery', items: '360+ items', color: '#FFF1F2', iconColor: '#F43F5E', imageUrl: 'https://img.icons8.com/color/256/books.png' },
-  { id: '11', name: 'Automotive', items: '450+ items', color: '#F3F4F6', iconColor: '#4B5563', imageUrl: 'https://img.icons8.com/color/256/car.png' },
-  { id: '12', name: 'Pet Supplies', items: '890+ items', color: '#FFF7ED', iconColor: '#D97706', imageUrl: 'https://img.icons8.com/color/256/dog.png' },
-  { id: '13', name: 'Baby & Kids', items: '1,500+ items', color: '#FDF2F8', iconColor: '#DB2777', imageUrl: 'https://img.icons8.com/color/256/teddy-bear.png' },
-  { id: '14', name: 'Jewelry & Watches', items: '320+ items', color: '#FEF3C7', iconColor: '#D97706', imageUrl: 'https://img.icons8.com/color/256/diamond.png' },
-  { id: '15', name: 'Tools & Hardware', items: '820+ items', color: '#F1F5F9', iconColor: '#64748B', imageUrl: 'https://img.icons8.com/color/256/hammer.png' },
-  { id: '16', name: 'Office Supplies', items: '410+ items', color: '#F8FAFC', iconColor: '#334155', imageUrl: 'https://img.icons8.com/color/256/stapler.png' },
-  { id: '17', name: 'Music & Instruments', items: '150+ items', color: '#F5F3FF', iconColor: '#7C3AED', imageUrl: 'https://img.icons8.com/color/256/guitar.png' },
-  { id: '18', name: 'Travel & Luggage', items: '290+ items', color: '#F0FDF4', iconColor: '#16A34A', imageUrl: 'https://img.icons8.com/color/256/suitcase.png' },
-  { id: '19', name: 'Garden & Outdoors', items: '670+ items', color: '#ECFCCB', iconColor: '#65A30D', imageUrl: 'https://img.icons8.com/color/256/potted-plant.png' },
-  { id: '20', name: 'Art & Crafts', items: '530+ items', color: '#FFF1F2', iconColor: '#E11D48', imageUrl: 'https://img.icons8.com/color/256/paint-palette.png' },
-  { id: '21', name: 'Gifts & Party', items: '340+ items', color: '#FEF3C7', iconColor: '#B45309', imageUrl: 'https://img.icons8.com/color/256/gift.png' },
-  { id: '22', name: 'Software & Digital', items: '120+ items', color: '#EFF6FF', iconColor: '#1D4ED8', imageUrl: 'https://img.icons8.com/color/256/software-installer.png' },
-  { id: '23', name: 'Industrial', items: '90+ items', color: '#F1F5F9', iconColor: '#475569', imageUrl: 'https://img.icons8.com/color/256/factory.png' },
-  { id: '24', name: 'Vintage & Antiques', items: '180+ items', color: '#FAF5FF', iconColor: '#9333EA', imageUrl: 'https://img.icons8.com/color/256/pocket-watch.png' },
-  { id: '25', name: 'Collectibles', items: '250+ items', color: '#FFF7ED', iconColor: '#C2410C', imageUrl: 'https://img.icons8.com/color/256/coins.png' },
+  { id: '5', name: 'Sports & Fitness', items: '420+ items', color: '#FFF7ED', iconColor: '#F97316', imageUrl: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=500&q=80' },
+  { id: '6', name: 'Groceries', items: '1,100+ items', color: '#F0FDF4', iconColor: '#22C55E', imageUrl: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&q=80' },
+  { id: '7', name: 'Toys & Games', items: '540+ items', color: '#F5F3FF', iconColor: '#8B5CF6', imageUrl: 'https://images.unsplash.com/photo-1523293115678-d2900f5b1d65?w=500&q=80' },
+  { id: '8', name: 'Health & Wellness', items: '620+ items', color: '#FEFCE8', iconColor: '#EAB308', imageUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=500&q=80' },
+  { id: '9', name: 'Mobiles & Accessories', items: '780+ items', color: '#EFF6FF', iconColor: '#3B82F6', imageUrl: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500&q=80' },
+  { id: '10', name: 'Books & Stationery', items: '360+ items', color: '#FFF1F2', iconColor: '#F43F5E', imageUrl: 'https://images.unsplash.com/photo-1610890716171-6b1bb98ffaed?w=500&q=80' },
+  { id: '11', name: 'Automotive', items: '450+ items', color: '#F3F4F6', iconColor: '#4B5563', imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80' },
+  { id: '12', name: 'Pet Supplies', items: '890+ items', color: '#FFF7ED', iconColor: '#D97706', imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80' },
+  { id: '13', name: 'Baby & Kids', items: '1,500+ items', color: '#FDF2F8', iconColor: '#DB2777', imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80' },
+  { id: '14', name: 'Jewelry & Watches', items: '320+ items', color: '#FEF3C7', iconColor: '#D97706', imageUrl: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&q=80' },
+  { id: '15', name: 'Tools & Hardware', items: '820+ items', color: '#F1F5F9', iconColor: '#64748B', imageUrl: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=500&q=80' },
+  { id: '16', name: 'Office Supplies', items: '410+ items', color: '#F8FAFC', iconColor: '#334155', imageUrl: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&q=80' },
+  { id: '17', name: 'Music & Instruments', items: '150+ items', color: '#F5F3FF', iconColor: '#7C3AED', imageUrl: 'https://images.unsplash.com/photo-1523293115678-d2900f5b1d65?w=500&q=80' },
+  { id: '18', name: 'Travel & Luggage', items: '290+ items', color: '#F0FDF4', iconColor: '#16A34A', imageUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=500&q=80' },
+  { id: '19', name: 'Garden & Outdoors', items: '670+ items', color: '#ECFCCB', iconColor: '#65A30D', imageUrl: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500&q=80' },
+  { id: '20', name: 'Art & Crafts', items: '530+ items', color: '#FFF1F2', iconColor: '#E11D48', imageUrl: 'https://images.unsplash.com/photo-1610890716171-6b1bb98ffaed?w=500&q=80' },
+  { id: '21', name: 'Gifts & Party', items: '340+ items', color: '#FEF3C7', iconColor: '#B45309', imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80' },
+  { id: '22', name: 'Software & Digital', items: '120+ items', color: '#EFF6FF', iconColor: '#1D4ED8', imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80' },
+  { id: '23', name: 'Industrial', items: '90+ items', color: '#F1F5F9', iconColor: '#475569', imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80' },
+  { id: '24', name: 'Vintage & Antiques', items: '180+ items', color: '#FAF5FF', iconColor: '#9333EA', imageUrl: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&q=80' },
+  { id: '25', name: 'Collectibles', items: '250+ items', color: '#FFF7ED', iconColor: '#C2410C', imageUrl: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=500&q=80' },
 ];
 
 
@@ -196,8 +196,7 @@ export const ordersData = [
       name: "Men's Running Shoes",
       variants: 'Size: 9 | Color: White',
       price: '₹2,499',
-      qty: 1,
-      imageUrl: 'https://img.icons8.com/color/256/sneakers.png'
+      imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80'
     }
   },
   {
@@ -211,8 +210,7 @@ export const ordersData = [
       name: 'Smart Watch',
       variants: 'Color: Black',
       price: '₹2,999',
-      qty: 1,
-      imageUrl: 'https://img.icons8.com/color/256/apple-watch-apps.png'
+      imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80'
     }
   },
   {
@@ -375,12 +373,12 @@ export const initialCartData = [
 ];
 
 export const topBrandsData = [
-  { id: 'b1', name: 'Nike', imageUrl: 'https://img.icons8.com/color/256/nike.png' },
-  { id: 'b2', name: 'Apple', imageUrl: 'https://img.icons8.com/ios-filled/256/mac-os.png' },
-  { id: 'b3', name: 'Sony', imageUrl: 'https://img.icons8.com/ios-filled/256/sony.png' },
-  { id: 'b4', name: 'Adidas', imageUrl: 'https://img.icons8.com/color/256/adidas-trefoil.png' },
-  { id: 'b5', name: 'Samsung', imageUrl: 'https://img.icons8.com/color/256/samsung.png' },
-  { id: 'b6', name: 'Puma', imageUrl: 'https://img.icons8.com/ios-filled/256/puma.png' },
+  { id: 'b1', name: 'Nike', imageUrl: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&q=80' },
+  { id: 'b2', name: 'Apple', imageUrl: 'https://images.unsplash.com/photo-1523293115678-d2900f5b1d65?w=500&q=80' },
+  { id: 'b3', name: 'Sony', imageUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=500&q=80' },
+  { id: 'b4', name: 'Adidas', imageUrl: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500&q=80' },
+  { id: 'b5', name: 'Samsung', imageUrl: 'https://images.unsplash.com/photo-1610890716171-6b1bb98ffaed?w=500&q=80' },
+  { id: 'b6', name: 'Puma', imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80' },
 ];
 
 export const flashSaleData = [
@@ -463,7 +461,7 @@ export const videoShortsData = [
     views: '1.2M',
     title: 'GRWM: Summer Party',
     videoThumbnail: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80',
-    productImage: 'https://img.icons8.com/color/256/dress-front-view.png'
+    productImage: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500&q=80'
   },
   {
     id: 'v2',
@@ -471,7 +469,7 @@ export const videoShortsData = [
     views: '850K',
     title: 'Top 5 Desk Setups',
     videoThumbnail: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=500&q=80',
-    productImage: 'https://img.icons8.com/color/256/laptop--v1.png'
+    productImage: 'https://images.unsplash.com/photo-1527814050087-151f93f1bc33?w=500&q=80'
   },
   {
     id: 'v3',
@@ -479,7 +477,7 @@ export const videoShortsData = [
     views: '420K',
     title: 'Cozy Living Room',
     videoThumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=500&q=80',
-    productImage: 'https://img.icons8.com/color/256/armchair.png'
+    productImage: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=500&q=80'
   },
   {
     id: 'v4',
@@ -487,7 +485,7 @@ export const videoShortsData = [
     views: '2.1M',
     title: 'Unboxing Rare Kicks',
     videoThumbnail: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80',
-    productImage: 'https://img.icons8.com/color/256/sneakers.png'
+    productImage: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80'
   }
 ];
 
@@ -516,7 +514,7 @@ export const shopTheLookData = {
       product: {
         name: 'Classic Sunglasses',
         price: '₹1,299',
-        imageUrl: 'https://img.icons8.com/color/256/sunglasses.png'
+        imageUrl: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&q=80'
       }
     },
     {
@@ -526,7 +524,7 @@ export const shopTheLookData = {
       product: {
         name: 'Denim Jacket',
         price: '₹3,499',
-        imageUrl: 'https://img.icons8.com/color/256/jacket.png'
+        imageUrl: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500&q=80'
       }
     },
     {
@@ -536,7 +534,7 @@ export const shopTheLookData = {
       product: {
         name: 'White Sneakers',
         price: '₹2,999',
-        imageUrl: 'https://img.icons8.com/color/256/sneakers.png'
+        imageUrl: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&q=80'
       }
     }
   ]

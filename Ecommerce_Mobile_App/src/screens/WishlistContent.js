@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,14 +14,43 @@ import { colors } from '../theme/colors';
 import { wishlistData as initialWishlist } from '../data/mockData';
 
 export default function WishlistContent({ onAddToCart, onExploreProducts }) {
-  const [items, setItems] = useState(initialWishlist);
+  const [items, setItems] = useState([]);
   const [activeFilter, setActiveFilter] = useState('All');
 
+  useEffect(() => {
+    fetch('http://192.168.31.64:5000/api/wishlist/1')
+      .then((res) => res.json())
+      .then((data) => {
+        const mapped = data.map((wItem) => ({
+          wishlistId: wItem.id,
+          id: wItem.Product.id.toString(),
+          name: wItem.Product.title,
+          price: Number(wItem.Product.price),
+          originalPrice: Math.floor(Number(wItem.Product.price) * 1.5),
+          discount: '33% OFF',
+          rating: wItem.Product.rating,
+          reviewsCount: '850',
+          imageUrl: wItem.Product.image,
+          inStock: true
+        }));
+        setItems(mapped);
+      })
+      .catch((err) => console.error('Failed to fetch wishlist:', err));
+  }, []);
+
   const handleRemoveItem = (id, name) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-    const msg = `Removed "${name}" from your wishlist.`;
-    if (Platform.OS === 'web') alert(msg);
-    else Alert.alert('Wishlist Updated', msg);
+    fetch('http://192.168.31.64:5000/api/wishlist/remove', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: 1, productId: Number(id) })
+    })
+    .then(() => {
+      setItems((prev) => prev.filter((item) => item.id !== id));
+      const msg = `Removed "${name}" from your wishlist.`;
+      if (Platform.OS === 'web') alert(msg);
+      else Alert.alert('Wishlist Updated', msg);
+    })
+    .catch((err) => console.error('Failed to remove item:', err));
   };
 
   const handleMoveToCart = (item) => {

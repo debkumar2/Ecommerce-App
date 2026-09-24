@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -55,6 +55,56 @@ export default function HomeScreen({ onNavigateToAuth }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [cartItems, setCartItems] = useState(initialCartData);
   const [wishlistCount, setWishlistCount] = useState(3);
+  const [dbProducts, setDbProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch live products
+    fetch('http://192.168.31.64:5000/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        const mappedProducts = data.map((p) => ({
+          id: p.id.toString(),
+          name: p.title,
+          price: Number(p.price),
+          originalPrice: Math.floor(Number(p.price) * 1.5),
+          discount: '33% OFF',
+          rating: p.rating,
+          reviewsCount: '850',
+          category: p.category ? p.category.name : 'General',
+          imageUrl: p.image,
+          type: 'general',
+          badgeColor: '#EF4444',
+          badgeText: 'NEW',
+        }));
+        setDbProducts(mappedProducts);
+      })
+      .catch((err) => console.error('Failed to fetch products:', err));
+
+    // Fetch live wishlist count
+    fetch('http://192.168.31.64:5000/api/wishlist/1')
+      .then((res) => res.json())
+      .then((data) => setWishlistCount(data.length))
+      .catch((err) => console.error('Failed to fetch wishlist count:', err));
+
+    // Fetch live cart count and items
+    fetch('http://192.168.31.64:5000/api/cart/1')
+      .then((res) => res.json())
+      .then((data) => {
+        const mappedCart = data.map((c) => ({
+          id: c.id.toString(), // cart item id
+          productId: c.Product.id,
+          name: c.Product.title,
+          price: Number(c.Product.price),
+          originalPrice: Math.floor(Number(c.Product.price) * 1.5),
+          quantity: c.quantity,
+          imageUrl: c.Product.image,
+          variant: 'Standard',
+          category: c.Product.Category ? c.Product.Category.name : 'General',
+        }));
+        setCartItems(mappedCart);
+      })
+      .catch((err) => console.error('Failed to fetch cart:', err));
+  }, []);
   const [activeBottomTab, setActiveBottomTab] = useState('home');
   const [isCartModalVisible, setIsCartModalVisible] = useState(false);
   const [isTodaysDealsVisible, setIsTodaysDealsVisible] = useState(false);
@@ -91,36 +141,55 @@ export default function HomeScreen({ onNavigateToAuth }) {
   const slideAnim = useRef(new Animated.Value(0)).current;
 
   const handleAddToCart = (item) => {
-    setCartItems((prev) => {
-      const existing = prev.find((i) => i.id === item.id || i.name === item.name);
-      if (existing) {
-        return prev.map((i) =>
-          (i.id === item.id || i.name === item.name)
-            ? { ...i, quantity: i.quantity + 1 }
-            : i
-        );
-      }
-      return [
-        ...prev,
-        {
-          id: item.id || `cart-${Date.now()}`,
-          name: item.name,
-          price: item.price,
-          originalPrice: item.originalPrice,
-          quantity: 1,
-          imageUrl: item.imageUrl,
-          variant: item.variant || 'Standard',
-          category: item.category || 'General',
-        },
-      ];
-    });
+    fetch('http://192.168.31.64:5000/api/cart/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: 1, productId: Number(item.id) })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setCartItems((prev) => {
+        const existing = prev.find((i) => i.productId == item.id || i.name === item.name);
+        if (existing) {
+          return prev.map((i) =>
+            (i.productId == item.id || i.name === item.name)
+              ? { ...i, quantity: i.quantity + 1 }
+              : i
+          );
+        }
+        return [
+          ...prev,
+          {
+            id: data.id ? data.id.toString() : `cart-${Date.now()}`,
+            productId: item.id,
+            name: item.name,
+            price: item.price,
+            originalPrice: item.originalPrice,
+            quantity: 1,
+            imageUrl: item.imageUrl,
+            variant: item.variant || 'Standard',
+            category: item.category || 'General',
+          },
+        ];
+      });
 
-    setAddedProduct(item);
-    setIsAddToCartSuccessVisible(true);
+      setAddedProduct(item);
+      setIsAddToCartSuccessVisible(true);
+    })
+    .catch((err) => console.error('Failed to add to cart:', err));
   };
 
   const handleToggleFavorite = (item, isFav) => {
     setWishlistCount(isFav ? wishlistCount + 1 : Math.max(0, wishlistCount - 1));
+    
+    // Sync with backend API
+    const endpoint = isFav ? 'add' : 'remove';
+    fetch(`http://192.168.31.64:5000/api/wishlist/${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: 1, productId: Number(item.id) })
+    })
+    .catch((err) => console.error(`Failed to ${endpoint} wishlist item:`, err));
   };
 
   const handleSelectProduct = (product) => {
@@ -262,9 +331,9 @@ export default function HomeScreen({ onNavigateToAuth }) {
                 </View>
               ) : (
                 <>
-                  {/* New Arrivals Section */}
+                  {/* New Arrivals Section - Now powered by live database! */}
                   <NewArrivalsSection
-                    data={newArrivalsData}
+                    data={dbProducts.length > 0 ? dbProducts.slice(0, 4) : newArrivalsData}
                     onAddToCart={handleAddToCart}
                     onToggleFavorite={handleToggleFavorite}
                     onSelectProduct={handleSelectProduct}
@@ -317,7 +386,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.horizontalProductsScroll}
                   >
-                    {todaysDealsData.map((item) => (
+                    {(dbProducts.length > 0 ? dbProducts : todaysDealsData).map((item) => (
                       <ProductCard
                         key={item.id}
                         item={item}
@@ -354,7 +423,7 @@ export default function HomeScreen({ onNavigateToAuth }) {
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.horizontalProductsScroll}
                   >
-                    {featuredProductsData.map((item) => (
+                    {(dbProducts.length > 0 ? dbProducts.slice(0, 6).reverse() : featuredProductsData).map((item) => (
                       <ProductCard
                         key={item.id}
                         item={item}
